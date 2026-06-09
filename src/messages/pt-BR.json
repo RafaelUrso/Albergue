@@ -29,5 +29,22 @@
     "loginButton": "Entrar",
     "loading": "Carregando...",
     "forgotPassword": "Esqueci minha senha"
+  },
+  "HostelMap": {
+    "title": "Mapa Visual do Albergue",
+    "corridor": "Corredor Central",
+    "room": "Quarto",
+    "bath": "Banheiro",
+    "sharedBath": "Banheiro Coletivo (Corredor)",
+    "kitchen": "Cozinha",
+    "laundry": "Lavanderia",
+    "refectory": "Refeitório",
+    "legend": {
+      "room": "Quartos",
+      "privateBath": "Banheiro Privativo",
+      "sharedBath": "Banheiro Compartilhado",
+      "commonArea": "Áreas Comuns / Lazer",
+      "bed": "Leito / Cama"
+    }
   }
 }

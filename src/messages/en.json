@@ -29,5 +29,22 @@
     "loginButton": "Login",
     "loading": "Loading...",
     "forgotPassword": "Forgot my password"
+  },
+  "HostelMap": {
+    "title": "Hostel Visual Map",
+    "corridor": "Central Corridor",
+    "room": "Room",
+    "bath": "Bath",
+    "sharedBath": "Shared Bathroom (Corridor)",
+    "kitchen": "Kitchen",
+    "laundry": "Laundry",
+    "refectory": "Refectory",
+    "legend": {
+      "room": "Rooms",
+      "privateBath": "Private Bathroom",
+      "sharedBath": "Shared Bathroom",
+      "commonArea": "Common Areas",
+      "bed": "Bed"
+    }
   }
 }

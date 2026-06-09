@@ -14,9 +14,9 @@ enum Perfil {
 }
 
 enum QuartoTipo {
-  TIPO_4_LEITOS
-  TIPO_8_LEITOS
-  TIPO_12_LEITOS
+  A
+  B
+  C
 }
 
 enum QuartoGenero {
