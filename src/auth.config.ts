@@ -8,7 +8,7 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const perfil = (auth?.user as any)?.perfil;
+      const perfil = (auth?.user as { perfil?: string })?.perfil;
 
       const isAdminRoute = nextUrl.pathname.includes("/admin");
       const isReceptionRoute = nextUrl.pathname.includes("/reception");
@@ -31,13 +31,13 @@ export const authConfig = {
     },
     async jwt({ token, user }) {
       if (user) {
-        token.perfil = (user as any).perfil;
+        token.perfil = (user as { perfil?: string }).perfil;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        (session.user as any).perfil = token.perfil;
+        (session.user as { perfil?: unknown }).perfil = token.perfil;
       }
       return session;
     },

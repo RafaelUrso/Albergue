@@ -42,8 +42,12 @@
 ## Phase 3: Physical Structure
 
 ### Database & Seed
-- Updated `QuartoTipo` to A, B, C to match business requirements.
-- Implemented `prisma/seed.ts` with comprehensive sample data for rooms, beds, tariffs, and an admin user.
+- Updated `QuartoTipo` to `TIPO_4_LEITOS`, `TIPO_8_LEITOS`, and `TIPO_12_LEITOS` to better reflect room capacity and characteristics.
+- Adjusted `prisma/seed.ts` to use these new enums and ensure:
+  - Idempotency (using `upsert` and manual checks by unique fields like room name).
+  - Correct bed count per room type (4, 8, 12).
+  - Logical tariff pricing (private rooms TIPO_4 and TIPO_12 are more expensive than TIPO_8).
+- Configured `prisma.config.ts` to include `process.loadEnvFile()` and the seed command for Prisma 7 compatibility.
 - **Note:** Due to the absence of a reachable PostgreSQL service in the sandbox environment and Docker pull rate limits, `npx prisma db seed` and `npx prisma migrate dev` could not be executed during implementation. Validation of migrations and seeding must be performed in a local environment with a working database.
 - Database URL is managed through `prisma.config.ts` (Prisma 7) and environment variables.
 
