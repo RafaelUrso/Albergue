@@ -32,6 +32,8 @@
 ### Database (Prisma 7)
 - Upgraded to Prisma 7 patterns: connection URL moved from `schema.prisma` to `prisma.config.ts`.
 - Using `@prisma/adapter-pg` with `pg` pool to handle connections as required by the new configuration architecture.
+- Configured idempotent database seeding using `tsx` in `prisma.config.ts`.
+- Implemented `process.loadEnvFile()` in `prisma.config.ts` to ensure environment variables are loaded for Prisma CLI tools.
 
 ### Security
 - Passwords hashed with `bcryptjs`.
