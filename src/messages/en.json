@@ -1,0 +1,16 @@
+{
+  "HomePage": {
+    "title": "Welcome to Sr. Almeida Hostel",
+    "description": "Your safe harbor in Santa Teresa, Rio de Janeiro."
+  },
+  "TopBar": {
+    "hostelName": "Sr. Almeida",
+    "search": {
+      "dates": "Dates",
+      "guests": "Guests"
+    },
+    "profile": "Profile",
+    "settings": "Settings",
+    "language": "Language"
+  }
+}

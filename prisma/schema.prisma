@@ -1,0 +1,242 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Perfil {
+  ADMIN_GERAL
+  ADMIN_FINANCEIRO
+  RECEPCIONISTA
+  HOSPEDE
+}
+
+enum QuartoTipo {
+  TIPO_4_LEITOS
+  TIPO_8_LEITOS
+  TIPO_12_LEITOS
+}
+
+enum QuartoGenero {
+  MASCULINO
+  FEMININO
+  MISTO
+}
+
+enum LeitoPosicao {
+  BELICHE_SUPERIOR
+  BELICHE_INFERIOR
+  CAMA_SIMPLES
+}
+
+enum LeitoLocalizacao {
+  PERTO_DA_PORTA
+  PERTO_DA_JANELA
+  CENTRAL
+}
+
+enum LeitoIncidenciaSol {
+  SOL_MANHA
+  SOL_TARDE
+  SEM_SOL
+}
+
+enum LeitoStatus {
+  DISPONIVEL
+  INDISPONIVEL
+  EM_MANUTENCAO
+}
+
+enum ReservaStatus {
+  CONFIRMADA
+  CHECKIN
+  CHECKOUT
+  CANCELADA
+}
+
+enum TarifaTipo {
+  PADRAO
+  SAZONAL
+  PROMOCIONAL
+}
+
+enum PagamentoMetodo {
+  CARTAO_CREDITO
+}
+
+enum PagamentoStatus {
+  PENDENTE
+  CONCLUIDO
+  FALHADO
+  ESTORNADO
+}
+
+enum FeedbackStatus {
+  PENDENTE
+  APROVADO
+  REJEITADO
+}
+
+model Usuario {
+  id                      String        @id @default(uuid())
+  nomeCompleto            String
+  email                   String        @unique
+  senhaHash               String
+  telefone                String
+  nacionalidade           String
+  dataNascimento          DateTime
+  documentoIdentificacao  String
+  passaporteCriptografado String?
+  perfil                  Perfil
+  ativo                   Boolean       @default(true)
+  aceiteTermosAt          DateTime?
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
+  reservas                Reserva[]     @relation("Titular")
+  feedbacks               Feedback[]
+  auditLogs               AuditLog[]
+  aceiteTermos            AceiteTermos[]
+  tarifasCriadas          Tarifa[]
+  feedbacksModerados      Feedback[]    @relation("Moderador")
+}
+
+model Quarto {
+  id                String        @id @default(uuid())
+  nome              String
+  tipo              QuartoTipo
+  banheiroPrivativo Boolean
+  genero            QuartoGenero
+  ativo             Boolean       @default(true)
+  createdAt         DateTime      @default(now())
+  leitos            Leito[]
+}
+
+model Leito {
+  id            String               @id @default(uuid())
+  quartoId      String
+  quarto        Quarto               @relation(fields: [quartoId], references: [id])
+  codigo        String               @unique
+  posicao       LeitoPosicao
+  localizacao   LeitoLocalizacao
+  incidenciaSol LeitoIncidenciaSol
+  status        LeitoStatus          @default(DISPONIVEL)
+  createdAt     DateTime             @default(now())
+  reservas      ReservaLeito[]
+}
+
+model Reserva {
+  id              String           @id @default(uuid())
+  usuarioTitularId String
+  usuarioTitular  Usuario          @relation("Titular", fields: [usuarioTitularId], references: [id])
+  status          ReservaStatus    @default(CONFIRMADA)
+  dataCheckin     DateTime
+  dataCheckout    DateTime
+  valorTotal      Decimal
+  valorPago       Decimal          @default(0)
+  createdAt       DateTime         @default(now())
+  leitos          ReservaLeito[]
+  declaracaoGrupo DeclaracaoGrupo?
+  pagamentos      Pagamento[]
+  cancelamento    Cancelamento?
+  feedbacks       Feedback[]
+}
+
+model ReservaLeito {
+  id               String         @id @default(uuid())
+  reservaId        String
+  reserva          Reserva        @relation(fields: [reservaId], references: [id])
+  leitoId          String
+  leito            Leito          @relation(fields: [leitoId], references: [id])
+  hospedeOcupanteId String?
+  hospedeOcupante  HospedeAvulso? @relation(fields: [hospedeOcupanteId], references: [id])
+}
+
+model HospedeAvulso {
+  id           String         @id @default(uuid())
+  nomeCompleto String
+  documento    String
+  reservas     ReservaLeito[]
+}
+
+model DeclaracaoGrupo {
+  id                   String  @id @default(uuid())
+  reservaId            String  @unique
+  reserva              Reserva @relation(fields: [reservaId], references: [id])
+  qtdAdultos           Int
+  qtdCriancas          Int     @default(0)
+  possuiPcd            Boolean @default(false)
+  qtdPcd               Int     @default(0)
+  descricaoDeficiencias String?
+}
+
+model Tarifa {
+  id           String      @id @default(uuid())
+  quartoTipo   QuartoTipo
+  valorDiaria  Decimal
+  tipo         TarifaTipo
+  dataInicio   DateTime?
+  dataFim      DateTime?
+  criadoPorId  String
+  criadoPor    Usuario     @relation(fields: [criadoPorId], references: [id])
+  createdAt    DateTime    @default(now())
+}
+
+model Pagamento {
+  id                   String          @id @default(uuid())
+  reservaId            String
+  reserva              Reserva         @relation(fields: [reservaId], references: [id])
+  gatewayTransactionId String
+  valor                Decimal
+  status               PagamentoStatus
+  metodo               PagamentoMetodo
+  createdAt            DateTime        @default(now())
+}
+
+model Cancelamento {
+  id                    String   @id @default(uuid())
+  reservaId             String   @unique
+  reserva              Reserva  @relation(fields: [reservaId], references: [id])
+  solicitadoEm          DateTime @default(now())
+  valorEstornado        Decimal
+  taxaRetida            Decimal
+  politicaAplicada      String
+  confirmadoPorUsuario  Boolean  @default(false)
+}
+
+model Feedback {
+  id           String         @id @default(uuid())
+  usuarioId    String
+  usuario      Usuario        @relation(fields: [usuarioId], references: [id])
+  reservaId    String
+  reserva      Reserva        @relation(fields: [reservaId], references: [id])
+  nota         Int
+  comentario   String?
+  status       FeedbackStatus @default(PENDENTE)
+  moderadoPorId String?
+  moderador    Usuario?       @relation("Moderador", fields: [moderadoPorId], references: [id])
+  createdAt    DateTime       @default(now())
+}
+
+model AuditLog {
+  id               String   @id @default(uuid())
+  usuarioId        String
+  usuario          Usuario  @relation(fields: [usuarioId], references: [id])
+  acao             String
+  entidade         String
+  entidadeId       String
+  dadosAnteriores  Json?
+  dadosNovos       Json?
+  ip               String?
+  createdAt        DateTime @default(now())
+}
+
+model AceiteTermos {
+  id        String   @id @default(uuid())
+  usuarioId String
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  versaoTermo String
+  aceitoEm  DateTime @default(now())
+}

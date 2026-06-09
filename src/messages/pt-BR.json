@@ -1,0 +1,16 @@
+{
+  "HomePage": {
+    "title": "Bem-vindo ao Albergue do Sr. Almeida",
+    "description": "Seu porto seguro em Santa Teresa, Rio de Janeiro."
+  },
+  "TopBar": {
+    "hostelName": "Sr. Almeida",
+    "search": {
+      "dates": "Datas",
+      "guests": "Pessoas"
+    },
+    "profile": "Perfil",
+    "settings": "Configurações",
+    "language": "Idioma"
+  }
+}
