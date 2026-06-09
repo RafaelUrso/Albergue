@@ -12,5 +12,22 @@
     "profile": "Perfil",
     "settings": "Configurações",
     "language": "Idioma"
+  },
+  "Auth": {
+    "loginTitle": "Login",
+    "registerTitle": "Cadastro",
+    "fullName": "Nome Completo",
+    "password": "Senha",
+    "phone": "Telefone",
+    "nationality": "Nacionalidade",
+    "birthDate": "Data de Nascimento",
+    "document": "Documento de Identificação",
+    "passport": "Número do Passaporte",
+    "termsAccept": "Eu aceito os",
+    "termsLink": "Termos de Uso e LGPD",
+    "registerButton": "Cadastrar",
+    "loginButton": "Entrar",
+    "loading": "Carregando...",
+    "forgotPassword": "Esqueci minha senha"
   }
 }

@@ -22,3 +22,19 @@
 - Using `next-intl` with standard App Router structure.
 - Middleware handles locale detection and prefixing.
 - Root page redirects to default locale.
+
+## Phase 2: Auth & RBAC
+
+### Authentication
+- Using Auth.js (v5) with JWT strategy.
+- Split configuration: `auth.config.ts` for Edge compatibility (used in Middleware) and `auth.ts` for the full configuration including the Prisma adapter and Credentials provider.
+
+### Database (Prisma 7)
+- Upgraded to Prisma 7 patterns: connection URL moved from `schema.prisma` to `prisma.config.ts`.
+- Using `@prisma/adapter-pg` with `pg` pool to handle connections as required by the new configuration architecture.
+
+### Security
+- Passwords hashed with `bcryptjs`.
+- International passports encrypted using `AES-256-CBC` with a 32-character key from `ENCRYPTION_KEY` environment variable.
+- Middleware-based RBAC protecting `/admin` and `/reception` routes.
+- Immutable LGPD acceptance records stored in `AceiteTermos` table with timestamp and version.

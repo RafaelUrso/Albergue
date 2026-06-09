@@ -12,5 +12,22 @@
     "profile": "Profile",
     "settings": "Settings",
     "language": "Language"
+  },
+  "Auth": {
+    "loginTitle": "Login",
+    "registerTitle": "Register",
+    "fullName": "Full Name",
+    "password": "Password",
+    "phone": "Phone",
+    "nationality": "Nationality",
+    "birthDate": "Birth Date",
+    "document": "Identification Document",
+    "passport": "Passport Number",
+    "termsAccept": "I accept the",
+    "termsLink": "Terms of Use and LGPD",
+    "registerButton": "Register",
+    "loginButton": "Login",
+    "loading": "Loading...",
+    "forgotPassword": "Forgot my password"
   }
 }
