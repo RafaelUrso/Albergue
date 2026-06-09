@@ -1,15 +1,19 @@
+import NextAuth from "next-auth";
+import { authConfig } from "./auth.config";
 import createMiddleware from 'next-intl/middleware';
 import {locales, defaultLocale} from './i18n/config';
 
-export default createMiddleware({
-  // A list of all locales that are supported
+const { auth } = NextAuth(authConfig);
+const intlMiddleware = createMiddleware({
   locales: locales,
-
-  // Used when no locale matches
   defaultLocale: defaultLocale
+});
+
+export default auth((req) => {
+   return intlMiddleware(req);
 });
 
 export const config = {
   // Match only internationalized pathnames
-  matcher: ['/', '/(en|pt-BR)/:path*']
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
 };
