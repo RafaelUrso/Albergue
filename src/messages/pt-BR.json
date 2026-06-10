@@ -59,6 +59,10 @@
       "male": "Masculino",
       "female": "Feminino",
       "mixed": "Misto",
+      "masculino": "Masculino",
+      "feminino": "Feminino",
+      "misto": "Misto",
+      "guests": "Pessoas",
       "select": "Selecionar"
     },
     "select": {

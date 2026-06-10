@@ -9,6 +9,7 @@ interface Bed {
   codigo: string;
   posicao: string;
   localizacao: string;
+  valorDiaria: number;
   quarto: {
     nome: string;
     tipo: string;
@@ -107,7 +108,7 @@ export default function BedList({
 
             <div className="text-right">
               <p className="text-sm text-gray-500">Diária estimada</p>
-              <p className="text-xl font-black text-azul-principal">R$ 80,00</p>
+              <p className="text-xl font-black text-azul-principal">R$ {leito.valorDiaria.toFixed(2)}</p>
             </div>
           </div>
         ))}

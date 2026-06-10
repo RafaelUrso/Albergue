@@ -50,10 +50,19 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
   }, [bedIds, sParams.checkIn, sParams.checkOut]);
 
   // Redirecionar para login se não estiver logado
-  if (status === 'unauthenticated') {
-    const callbackUrl = encodeURIComponent(window.location.href);
-    router.push(`/${locale}/auth/login?callbackUrl=${callbackUrl}`);
-    return null;
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      const callbackUrl = encodeURIComponent(window.location.href);
+      router.push(`/${locale}/auth/login?callbackUrl=${callbackUrl}`);
+    }
+  }, [status, locale, router]);
+
+  if (status === 'unauthenticated' || status === 'loading') {
+    return (
+      <div className="pt-24 pb-12 px-4 text-center">
+        <p className="text-gray-500">Carregando...</p>
+      </div>
+    );
   }
 
   const handleConfirm = async () => {

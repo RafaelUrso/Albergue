@@ -21,7 +21,9 @@ export default function TopBar() {
   const toggleLanguage = () => {
     const newLocale = pathname.startsWith('/en') ? 'pt-BR' : 'en';
     const newPath = pathname.replace(/^\/(en|pt-BR)/, `/${newLocale}`);
-    router.push(newPath || `/${newLocale}`);
+    const query = searchParams.toString();
+    const finalPath = query ? `${newPath}?${query}` : newPath;
+    router.push(finalPath || `/${newLocale}`);
   };
 
   const handleSearchUpdate = useCallback((updates: Record<string, string>) => {

@@ -8,7 +8,7 @@
     "hostelName": "Sr. Almeida",
     "search": {
       "dates": "Dates",
-      "guests": "Guests",
+      "guests": "People",
       "checkin": "Check-in",
       "checkout": "Check-out"
     },
@@ -59,6 +59,10 @@
       "male": "Male",
       "female": "Female",
       "mixed": "Mixed",
+      "masculino": "Male",
+      "feminino": "Female",
+      "misto": "Mixed",
+      "guests": "People",
       "select": "Select"
     },
     "select": {
