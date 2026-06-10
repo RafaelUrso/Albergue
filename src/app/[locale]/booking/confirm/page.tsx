@@ -5,6 +5,7 @@ import { useState, use, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { createBooking, calculateEstimatedPrice, processPayment } from '@/lib/actions/booking';
 import { useSession } from 'next-auth/react';
+import { formatDisplayDate } from '@/lib/date-utils';
 
 interface ConfirmPageProps {
   searchParams: Promise<{
@@ -122,7 +123,7 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
             <div>
               <p className="text-xs text-gray-500 uppercase font-bold">{t('period')}</p>
               <p className="font-medium">
-                {checkInDate.toLocaleDateString(locale as string)} — {checkOutDate.toLocaleDateString(locale as string)}
+                {formatDisplayDate(sParams.checkIn, locale as string)} — {formatDisplayDate(sParams.checkOut, locale as string)}
               </p>
             </div>
             <div>

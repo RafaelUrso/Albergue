@@ -81,6 +81,12 @@ export async function saveTariff(data: {
 
   const { id, quartoTipo, valorDiaria, tipo, dataInicio, dataFim } = data;
 
+  // Garantir que datas de tarifa sejam salvas às 12:00 UTC
+  const normalizedDataInicio = dataInicio ? new Date(dataInicio) : null;
+  if (normalizedDataInicio) normalizedDataInicio.setUTCHours(12, 0, 0, 0);
+  const normalizedDataFim = dataFim ? new Date(dataFim) : null;
+  if (normalizedDataFim) normalizedDataFim.setUTCHours(12, 0, 0, 0);
+
   return await prisma.$transaction(async (tx) => {
     let oldTariff = null;
     if (id) {
@@ -96,16 +102,16 @@ export async function saveTariff(data: {
       where: { id: id || oldTariff?.id || "new-id" },
       update: {
         valorDiaria: new Prisma.Decimal(valorDiaria),
-        dataInicio: dataInicio || null,
-        dataFim: dataFim || null,
+        dataInicio: normalizedDataInicio,
+        dataFim: normalizedDataFim,
         criadoPorId: session.user!.id!,
       },
       create: {
         quartoTipo,
         valorDiaria: new Prisma.Decimal(valorDiaria),
         tipo,
-        dataInicio: dataInicio || null,
-        dataFim: dataFim || null,
+        dataInicio: normalizedDataInicio,
+        dataFim: normalizedDataFim,
         criadoPorId: session.user!.id!,
       },
     });

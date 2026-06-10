@@ -150,6 +150,49 @@
       "confirmDelete": "Are you sure you want to delete this tariff?",
       "logs": "Tariff Audit Logs",
       "loading": "Loading tariffs..."
+    },
+    "settings": {
+      "title": "System Settings",
+      "cancellationPolicy": "Cancellation Policy",
+      "feeType": "Fee Type",
+      "feeValue": "Fee Value",
+      "maxFee": "Max Fee",
+      "maxFeeHint": "Charged for same-day or no-show cancellations.",
+      "percentage": "Percentage (%)",
+      "fixedValue": "Fixed Value (R$)",
+      "save": "Save Settings",
+      "saving": "Saving...",
+      "saveSuccess": "Settings saved successfully!",
+      "loading": "Loading settings..."
+    }
+  },
+  "Account": {
+    "reservations": {
+      "title": "My Reservations",
+      "loading": "Loading reservations...",
+      "noReservations": "You have no reservations yet.",
+      "beds": "bed(s)",
+      "cancel": "Cancel",
+      "refunded": "Refunded",
+      "fee": "Retained Fee",
+      "cancelConfirmTitle": "Request Cancellation",
+      "totalAmount": "Reservation Value",
+      "feeToRetain": "Cancellation Fee",
+      "estimatedRefund": "Estimated Refund",
+      "policyApplied": "Policy Applied",
+      "proceed": "Proceed with cancellation",
+      "keepReservation": "Keep Reservation",
+      "finalConfirmation": "Confirm Cancellation",
+      "finalWarning": "This action is irreversible. The value will be refunded to your card according to the policy.",
+      "confirmCancellation": "Yes, I want to cancel",
+      "back": "Back",
+      "processing": "Processing...",
+      "cancelSuccess": "Reservation cancelled successfully!",
+      "policies": {
+        "GRATUITO_5_DIAS_OU_MAIS": "Free (>= 5 days notice)",
+        "TAXA_1_A_4_DIAS": "Convenience fee (1 to 4 days notice)",
+        "NO_DAY_OR_NOSHOW": "No-show / Same-day charge"
+      }
     }
   },
   "Enums": {

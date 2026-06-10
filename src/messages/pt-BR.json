@@ -150,6 +150,49 @@
       "confirmDelete": "Tem certeza que deseja excluir esta tarifa?",
       "logs": "Log de Auditoria de Tarifas",
       "loading": "Carregando tarifas..."
+    },
+    "settings": {
+      "title": "Configurações do Sistema",
+      "cancellationPolicy": "Política de Cancelamento",
+      "feeType": "Tipo de Taxa",
+      "feeValue": "Valor da Taxa",
+      "maxFee": "Taxa Máxima",
+      "maxFeeHint": "Cobrada em cancelamentos no dia ou no-show.",
+      "percentage": "Percentual (%)",
+      "fixedValue": "Valor Fixo (R$)",
+      "save": "Salvar Configurações",
+      "saving": "Salvando...",
+      "saveSuccess": "Configurações salvas com sucesso!",
+      "loading": "Carregando configurações..."
+    }
+  },
+  "Account": {
+    "reservations": {
+      "title": "Minhas Reservas",
+      "loading": "Carregando reservas...",
+      "noReservations": "Você ainda não possui reservas.",
+      "beds": "leito(s)",
+      "cancel": "Cancelar",
+      "refunded": "Estornado",
+      "fee": "Taxa retida",
+      "cancelConfirmTitle": "Solicitar Cancelamento",
+      "totalAmount": "Valor da Reserva",
+      "feeToRetain": "Taxa de Cancelamento",
+      "estimatedRefund": "Reembolso Estimado",
+      "policyApplied": "Política Aplicada",
+      "proceed": "Prosseguir para cancelamento",
+      "keepReservation": "Manter Reserva",
+      "finalConfirmation": "Confirmar Cancelamento",
+      "finalWarning": "Esta ação é irreversível. O valor será estornado para o seu cartão conforme a política.",
+      "confirmCancellation": "Sim, desejo cancelar",
+      "back": "Voltar",
+      "processing": "Processando...",
+      "cancelSuccess": "Reserva cancelada com sucesso!",
+      "policies": {
+        "GRATUITO_5_DIAS_OU_MAIS": "Gratuito (Antecedência >= 5 dias)",
+        "TAXA_1_A_4_DIAS": "Taxa de conveniência (1 a 4 dias de antecedência)",
+        "NO_DAY_OR_NOSHOW": "Cobrança de No-show / Dia do check-in"
+      }
     }
   },
   "Enums": {
