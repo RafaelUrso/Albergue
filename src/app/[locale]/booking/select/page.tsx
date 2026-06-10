@@ -37,7 +37,7 @@ export default function SelectPage({ searchParams }: SelectPageProps) {
 
     // Validar se todos os campos estão preenchidos
     if (companions.some(c => !c.nomeCompleto || !c.documento)) {
-      alert('Por favor, preencha todos os dados dos acompanhantes.');
+      alert(t('validationError'));
       return;
     }
 
@@ -56,7 +56,7 @@ export default function SelectPage({ searchParams }: SelectPageProps) {
       <form onSubmit={handleSubmit} className="space-y-8">
         {companions.length === 0 ? (
           <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm text-center">
-            <p className="text-gray-600">Reserva individual selecionada. Clique em continuar.</p>
+            <p className="text-gray-600">{t('individual')}</p>
           </div>
         ) : (
           companions.map((comp, idx) => (
@@ -108,7 +108,7 @@ export default function SelectPage({ searchParams }: SelectPageProps) {
             onClick={() => router.back()}
             className="text-gray-600 font-bold hover:underline"
           >
-            Voltar
+            {t('back')}
           </button>
           <button
             type="submit"

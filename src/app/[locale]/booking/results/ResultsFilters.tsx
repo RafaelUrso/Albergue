@@ -5,6 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 
 export default function ResultsFilters({ sParams }: { sParams: Record<string, string> }) {
   const t = useTranslations('Booking.results');
+  const te = useTranslations('Enums');
   const router = useRouter();
   const { locale } = useParams();
 
@@ -74,23 +75,23 @@ export default function ResultsFilters({ sParams }: { sParams: Record<string, st
                 onChange={() => updateFilter('banheiroPrivativo', '')}
                 className="text-azul-principal"
               />
-              Todos
+              {t('all')}
             </label>
           </div>
         </div>
 
         {/* Posição */}
         <div>
-          <label className="text-xs font-bold text-gray-500 uppercase">Posição</label>
+          <label className="text-xs font-bold text-gray-500 uppercase">{t('position')}</label>
           <select
             value={sParams.posicao || ''}
             onChange={(e) => updateFilter('posicao', e.target.value)}
             className="mt-1 w-full border border-gray-200 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-azul-principal"
           >
-            <option value="">Todas</option>
-            <option value="BELICHE_SUPERIOR">Beliche Superior</option>
-            <option value="BELICHE_INFERIOR">Beliche Inferior</option>
-            <option value="CAMA_SIMPLES">Cama Simples</option>
+            <option value="">{t('all')}</option>
+            <option value="BELICHE_SUPERIOR">{te('LeitoPosicao.BELICHE_SUPERIOR')}</option>
+            <option value="BELICHE_INFERIOR">{te('LeitoPosicao.BELICHE_INFERIOR')}</option>
+            <option value="CAMA_SIMPLES">{te('LeitoPosicao.CAMA_SIMPLES')}</option>
           </select>
         </div>
       </div>

@@ -20,13 +20,17 @@
   },
   "Selectors": {
     "guests": {
+      "label": "People",
+      "summary": "{adults} Adults, {children} Children",
       "adults": "Adults",
       "children": "Children",
+      "childrenAge": "0 to 4 years old",
       "pcd": "Is there anyone with disabilities in the group?",
       "yes": "Yes",
       "no": "No",
       "pcdCount": "PWD Count",
       "pcdDescription": "Describe needs/disabilities",
+      "elevatorWarning": "Warning: The hostel does not have an elevator (access only by stairs).",
       "close": "Confirm"
     }
   },
@@ -63,23 +67,37 @@
       "feminino": "Female",
       "misto": "Mixed",
       "guests": "People",
-      "select": "Select"
+      "select": "Select",
+      "selectedBeds": "{count} of {total} beds selected",
+      "selectMore": "Select {count} more to continue",
+      "estimatedPrice": "Estimated price",
+      "all": "All",
+      "position": "Position"
     },
     "select": {
       "title": "Identify Guests",
       "companion": "Companion",
       "name": "Full Name",
       "document": "Document",
-      "continue": "Continue"
+      "continue": "Continue",
+      "individual": "Individual reservation selected. Click continue.",
+      "validationError": "Please fill in all companion details.",
+      "back": "Back"
     },
     "confirm": {
       "title": "Confirm Reservation",
       "summary": "Reservation Summary",
       "period": "Period",
       "nights": "Nights",
+      "beds": "Beds",
+      "bedsSelected": "{count} selected",
       "total": "Total Amount",
+      "calculating": "Calculating...",
       "termsAccept": "I have read and accept the Terms of Use",
-      "confirmButton": "Finalize Reservation"
+      "confirmButton": "Finalize Reservation",
+      "processing": "Processing...",
+      "errorDefault": "An error occurred while creating the reservation.",
+      "loading": "Loading..."
     },
     "success": {
       "title": "Reservation Confirmed!",
@@ -103,6 +121,23 @@
       "sharedBath": "Shared Bathroom",
       "commonArea": "Common Areas",
       "bed": "Bed"
+    }
+  },
+  "Enums": {
+    "LeitoPosicao": {
+      "BELICHE_SUPERIOR": "Top Bunk",
+      "BELICHE_INFERIOR": "Bottom Bunk",
+      "CAMA_SIMPLES": "Single Bed"
+    },
+    "LeitoLocalizacao": {
+      "PERTO_DA_PORTA": "Near Door",
+      "PERTO_DA_JANELA": "Near Window",
+      "CENTRAL": "Central"
+    },
+    "LeitoIncidenciaSol": {
+      "SOL_MANHA": "Morning Sun",
+      "SOL_TARDE": "Afternoon Sun",
+      "SEM_SOL": "No Sun"
     }
   }
 }
