@@ -65,7 +65,8 @@ export async function calculateRefund(reservaId: string) {
   const today = new Date();
   today.setUTCHours(12, 0, 0, 0);
 
-  const checkin = new Date(reserva.dataCheckin);
+  const checkin = reserva.dataCheckin ? new Date(reserva.dataCheckin) : null;
+  if (!checkin || isNaN(checkin.getTime())) throw new Error("Data de check-in inválida");
   checkin.setUTCHours(12, 0, 0, 0);
 
   const diffTime = checkin.getTime() - today.getTime();
@@ -97,8 +98,11 @@ export async function calculateRefund(reservaId: string) {
     // No dia do check-in ou no-show: cobrança integral da primeira diária ou taxa máxima
     // Vamos calcular o valor da primeira diária
     // Simplificação: valorTotal / numDiarias (Assumindo que todas as diárias foram pagas e calculadas)
-    const numDiarias = Math.ceil((reserva.dataCheckout.getTime() - reserva.dataCheckin.getTime()) / (1000 * 60 * 60 * 24));
-    const valorPrimeiraDiaria = valorTotal / numDiarias;
+    const checkout = reserva.dataCheckout ? new Date(reserva.dataCheckout) : null;
+    if (!checkout || isNaN(checkout.getTime())) throw new Error("Data de check-out inválida");
+
+    const numDiarias = Math.ceil((checkout.getTime() - checkin.getTime()) / (1000 * 60 * 60 * 24));
+    const valorPrimeiraDiaria = numDiarias > 0 ? valorTotal / numDiarias : valorTotal;
 
     const maxFee = parseFloat(await getConfiguracao("CANCELLATION_MAX_FEE") || "100"); // Padrão 100 se não definido
     taxaRetida = Math.max(valorPrimeiraDiaria, (valorTotal * maxFee) / 100);

@@ -14,6 +14,8 @@
     },
     "profile": "Perfil",
     "settings": "Configurações",
+    "myReservations": "Minhas Reservas",
+    "adminPanel": "Painel Admin",
     "language": "Idioma",
     "login": "Entrar",
     "logout": "Sair"
@@ -160,6 +162,7 @@
       "maxFeeHint": "Cobrada em cancelamentos no dia ou no-show.",
       "percentage": "Percentual (%)",
       "fixedValue": "Valor Fixo (R$)",
+      "backToDashboard": "Voltar ao Painel",
       "save": "Salvar Configurações",
       "saving": "Salvando...",
       "saveSuccess": "Configurações salvas com sucesso!",
