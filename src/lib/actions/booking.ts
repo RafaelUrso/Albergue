@@ -58,7 +58,26 @@ export async function searchAvailableBeds(params: {
     }
   });
 
-  return leitos;
+  // Buscar tarifas atuais para os tipos de quarto encontrados
+  const tiposEncontrados = Array.from(new Set(leitos.map(l => l.quarto.tipo)));
+  const tarifas = await prisma.tarifa.findMany({
+    where: {
+      quartoTipo: { in: tiposEncontrados },
+      tipo: 'PADRAO' // Ou lógica mais complexa se houver sazonais
+    },
+    orderBy: { createdAt: 'desc' }
+  });
+
+  // Mapear leitos com suas respectivas tarifas
+  const leitosComTarifa = leitos.map(leito => {
+    const tarifa = tarifas.find(t => t.quartoTipo === leito.quarto.tipo);
+    return {
+      ...leito,
+      valorDiaria: tarifa ? Number(tarifa.valorDiaria) : 0
+    };
+  });
+
+  return leitosComTarifa;
 }
 
 export async function createBooking(input: BookingInput) {

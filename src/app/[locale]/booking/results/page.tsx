@@ -44,7 +44,7 @@ export default async function ResultsPage({ params, searchParams }: ResultsPageP
         <div>
           <h1 className="text-3xl font-bold">{t('title')}</h1>
           <p className="text-gray-600">
-            {new Date(sParams.checkIn).toLocaleDateString(locale)} — {new Date(sParams.checkOut).toLocaleDateString(locale)} • {sParams.adults} Adultos
+            {new Date(sParams.checkIn).toLocaleDateString(locale)} — {new Date(sParams.checkOut).toLocaleDateString(locale)} • {sParams.adults} {t('guests')}
           </p>
         </div>
       </div>
