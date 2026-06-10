@@ -40,8 +40,8 @@ export default function GuestSelector({
         onClick={() => setIsOpen(!isOpen)}
         className="bg-white/10 hover:bg-white/20 px-4 py-3 rounded-md transition text-sm text-white flex flex-col items-start min-w-[150px]"
       >
-        <span className="text-[10px] uppercase font-bold text-white/70">Pessoas</span>
-        <span>{adults} Adultos, {children} Crianças</span>
+        <span className="text-[10px] uppercase font-bold text-white/70">{t('label')}</span>
+        <span>{t('summary', { adults, children })}</span>
       </button>
 
       {isOpen && (
@@ -69,7 +69,7 @@ export default function GuestSelector({
             <div className="flex items-center justify-between">
               <div>
                 <label className="font-medium block">{t('children')}</label>
-                <span className="text-xs text-gray-500">0 a 4 anos</span>
+                <span className="text-xs text-gray-500">{t('childrenAge')}</span>
               </div>
               <div className="flex items-center gap-3">
                 <button
@@ -137,7 +137,7 @@ export default function GuestSelector({
                     className="w-full border border-gray-300 rounded p-2 text-sm h-20 focus:ring-2 focus:ring-azul-principal outline-none"
                   />
                   <div className="p-2 bg-red-50 border border-red-100 rounded text-[10px] text-red-600 font-medium">
-                    Aviso: O albergue não possui elevador (acesso apenas por escadas).
+                    {t('elevatorWarning')}
                   </div>
                 </div>
               )}

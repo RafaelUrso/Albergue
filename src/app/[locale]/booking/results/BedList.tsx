@@ -26,6 +26,7 @@ export default function BedList({
   sParams: Record<string, string>
 }) {
   const t = useTranslations('Booking.results');
+  const te = useTranslations('Enums');
   const router = useRouter();
   const { locale } = useParams();
   const [selectedBeds, setSelectedBeds] = useState<string[]>([]);
@@ -49,9 +50,9 @@ export default function BedList({
     <div className="space-y-4">
       <div className="bg-azul-principal text-white p-4 rounded-xl flex justify-between items-center sticky top-20 z-30 shadow-lg">
         <div>
-          <p className="font-bold">{selectedBeds.length} de {adultsNeeded} leitos selecionados</p>
+          <p className="font-bold">{t('selectedBeds', { count: selectedBeds.length, total: adultsNeeded })}</p>
           {selectedBeds.length < adultsNeeded && (
-            <p className="text-xs opacity-80">Selecione mais {adultsNeeded - selectedBeds.length} para continuar</p>
+            <p className="text-xs opacity-80">{t('selectMore', { count: adultsNeeded - selectedBeds.length })}</p>
           )}
         </div>
         <button
@@ -91,7 +92,7 @@ export default function BedList({
                 </p>
                 <div className="flex flex-wrap gap-2 mt-2">
                   <span className="px-2 py-1 bg-white border border-gray-200 rounded text-[10px] font-bold uppercase text-gray-600">
-                    {leito.posicao.replace('_', ' ')}
+                    {te(`LeitoPosicao.${leito.posicao}`)}
                   </span>
                   <span className="px-2 py-1 bg-white border border-gray-200 rounded text-[10px] font-bold uppercase text-gray-600">
                     {leito.quarto.banheiroPrivativo ? t('private') : t('shared')}
@@ -100,15 +101,20 @@ export default function BedList({
                     {t(leito.quarto.genero.toLowerCase())}
                   </span>
                   <span className="px-2 py-1 bg-white border border-gray-200 rounded text-[10px] font-bold uppercase text-gray-600">
-                    {leito.localizacao.replace('_', ' ')}
+                    {te(`LeitoLocalizacao.${leito.localizacao}`)}
+                  </span>
+                  <span className="px-2 py-1 bg-white border border-gray-200 rounded text-[10px] font-bold uppercase text-gray-600">
+                    {te(`LeitoIncidenciaSol.${leito.incidenciaSol}`)}
                   </span>
                 </div>
               </div>
             </div>
 
             <div className="text-right">
-              <p className="text-sm text-gray-500">Diária estimada</p>
-              <p className="text-xl font-black text-azul-principal">R$ {leito.valorDiaria.toFixed(2)}</p>
+              <p className="text-sm text-gray-500">{t('estimatedPrice')}</p>
+              <p className="text-xl font-black text-azul-principal">
+                {new Intl.NumberFormat(locale as string, { style: 'currency', currency: 'BRL' }).format(leito.valorDiaria)}
+              </p>
             </div>
           </div>
         ))}

@@ -20,13 +20,17 @@
   },
   "Selectors": {
     "guests": {
+      "label": "Pessoas",
+      "summary": "{adults} Adultos, {children} Crianças",
       "adults": "Adultos",
       "children": "Crianças",
+      "childrenAge": "0 a 4 anos",
       "pcd": "Há PCD no grupo?",
       "yes": "Sim",
       "no": "Não",
       "pcdCount": "Quantidade de PCD",
       "pcdDescription": "Descreva as necessidades/deficiências",
+      "elevatorWarning": "Aviso: O albergue não possui elevador (acesso apenas por escadas).",
       "close": "Confirmar"
     }
   },
@@ -63,23 +67,37 @@
       "feminino": "Feminino",
       "misto": "Misto",
       "guests": "Pessoas",
-      "select": "Selecionar"
+      "select": "Selecionar",
+      "selectedBeds": "{count} de {total} leitos selecionados",
+      "selectMore": "Selecione mais {count} para continuar",
+      "estimatedPrice": "Diária estimada",
+      "all": "Todos",
+      "position": "Posição"
     },
     "select": {
       "title": "Identificar Hóspedes",
       "companion": "Acompanhante",
       "name": "Nome Completo",
       "document": "Documento",
-      "continue": "Continuar"
+      "continue": "Continuar",
+      "individual": "Reserva individual selecionada. Clique em continuar.",
+      "validationError": "Por favor, preencha todos os dados dos acompanhantes.",
+      "back": "Voltar"
     },
     "confirm": {
       "title": "Confirmar Reserva",
       "summary": "Resumo da Reserva",
       "period": "Período",
       "nights": "Noites",
+      "beds": "Leitos",
+      "bedsSelected": "{count} selecionado(s)",
       "total": "Valor Total",
+      "calculating": "Calculando...",
       "termsAccept": "Li e aceito os Termos de Uso",
-      "confirmButton": "Finalizar Reserva"
+      "confirmButton": "Finalizar Reserva",
+      "processing": "Processando...",
+      "errorDefault": "Ocorreu um erro ao criar a reserva.",
+      "loading": "Carregando..."
     },
     "success": {
       "title": "Reserva Confirmada!",
@@ -103,6 +121,23 @@
       "sharedBath": "Banheiro Compartilhado",
       "commonArea": "Áreas Comuns / Lazer",
       "bed": "Leito / Cama"
+    }
+  },
+  "Enums": {
+    "LeitoPosicao": {
+      "BELICHE_SUPERIOR": "Beliche Superior",
+      "BELICHE_INFERIOR": "Beliche Inferior",
+      "CAMA_SIMPLES": "Cama Simples"
+    },
+    "LeitoLocalizacao": {
+      "PERTO_DA_PORTA": "Perto da Porta",
+      "PERTO_DA_JANELA": "Perto da Janela",
+      "CENTRAL": "Central"
+    },
+    "LeitoIncidenciaSol": {
+      "SOL_MANHA": "Sol da Manhã",
+      "SOL_TARDE": "Sol da Tarde",
+      "SEM_SOL": "Sem Sol"
     }
   }
 }

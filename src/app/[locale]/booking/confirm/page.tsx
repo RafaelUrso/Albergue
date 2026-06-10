@@ -60,7 +60,7 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
   if (status === 'unauthenticated' || status === 'loading') {
     return (
       <div className="pt-24 pb-12 px-4 text-center">
-        <p className="text-gray-500">Carregando...</p>
+        <p className="text-gray-500">{t('loading')}</p>
       </div>
     );
   }
@@ -89,7 +89,7 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
 
       router.push(`/${locale}/booking/success?bookingId=${result.id}`);
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Ocorreu um erro ao criar a reserva.';
+      const message = err instanceof Error ? err.message : t('errorDefault');
       setError(message);
       setIsSubmitting(false);
     }
@@ -121,14 +121,16 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
           <hr className="border-gray-100" />
 
           <div>
-            <p className="text-xs text-gray-500 uppercase font-bold">Leitos</p>
-            <p className="font-medium">{bedIds.length} selecionado(s)</p>
+            <p className="text-xs text-gray-500 uppercase font-bold">{t('beds')}</p>
+            <p className="font-medium">{t('bedsSelected', { count: bedIds.length })}</p>
           </div>
 
           <div className="bg-gray-50 p-4 rounded-lg flex justify-between items-center">
             <span className="font-bold text-lg">{t('total')}</span>
             <span className="text-2xl font-black text-azul-principal">
-              {totalPrice !== null ? `R$ ${totalPrice.toFixed(2)}` : 'Calculando...'}
+              {totalPrice !== null
+                ? new Intl.NumberFormat(locale as string, { style: 'currency', currency: 'BRL' }).format(totalPrice)
+                : t('calculating')}
             </span>
           </div>
 
@@ -160,7 +162,7 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
                 : 'bg-gray-400 cursor-not-allowed'
               }`}
             >
-              {isSubmitting ? 'Processando...' : t('confirmButton')}
+              {isSubmitting ? t('processing') : t('confirmButton')}
             </button>
           </div>
         </div>
