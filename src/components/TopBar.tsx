@@ -17,6 +17,7 @@ export default function TopBar() {
 
   const currentLocale = pathname.split('/')[1] || 'pt-BR';
   const isBookingPage = pathname.includes('/booking/results');
+  const isAdmin = session?.user && ['ADMIN_GERAL', 'ADMIN_FINANCEIRO'].includes((session.user as { perfil?: string }).perfil || '');
 
   const toggleLanguage = () => {
     const newLocale = pathname.startsWith('/en') ? 'pt-BR' : 'en';
@@ -75,8 +76,30 @@ export default function TopBar() {
       {/* Direita: Perfil, Config, Idioma */}
       <div className="flex items-center gap-2 md:gap-4 ml-auto">
         {session ? (
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-medium hidden lg:inline">{session.user?.name}</span>
+          <div className="flex items-center gap-3">
+            <div className="flex flex-col items-end hidden lg:flex">
+              <span className="text-sm font-bold">{session.user?.name}</span>
+              <div className="flex gap-2">
+                {isAdmin && (
+                  <Link href={`/${currentLocale}/admin/dashboard`} className="text-[10px] uppercase font-black hover:underline text-white/80">
+                    {t('adminPanel')}
+                  </Link>
+                )}
+                <Link href={`/${currentLocale}/account/reservations`} className="text-[10px] uppercase font-black hover:underline text-white/80">
+                  {t('myReservations')}
+                </Link>
+              </div>
+            </div>
+
+            {/* Mobile/Small Screens Links */}
+            <div className="lg:hidden flex items-center gap-2">
+               <Link href={`/${currentLocale}/account/reservations`} title={t('myReservations')} className="hover:bg-white/10 p-1 rounded">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+               </Link>
+            </div>
+
             <button
               onClick={() => signOut()}
               className="hover:bg-white/10 p-2 rounded-full transition"

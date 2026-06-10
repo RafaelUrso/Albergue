@@ -34,9 +34,11 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
   const [error, setError] = useState<string | null>(null);
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
 
-  const checkInDate = new Date(sParams.checkIn);
-  const checkOutDate = new Date(sParams.checkOut);
-  const nights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
+  const checkInDate = sParams.checkIn ? new Date(sParams.checkIn) : null;
+  const checkOutDate = sParams.checkOut ? new Date(sParams.checkOut) : null;
+  const nights = (checkInDate && checkOutDate)
+    ? Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24))
+    : 0;
   const bedIds = sParams.selectedBeds.split(',');
 
   useEffect(() => {

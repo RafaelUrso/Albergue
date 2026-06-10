@@ -23,7 +23,7 @@ export async function searchAvailableBeds(params: {
   const checkin = parseDateUTC(params.checkIn);
   const checkout = parseDateUTC(params.checkOut);
 
-  if (isNaN(checkin.getTime()) || isNaN(checkout.getTime())) {
+  if (!checkin || isNaN(checkin.getTime()) || !checkout || isNaN(checkout.getTime())) {
     return [];
   }
 
@@ -128,7 +128,7 @@ export async function createBooking(input: BookingInput) {
       include: { quarto: true }
     });
 
-    const numDiarias = Math.ceil((checkout.getTime() - checkin.getTime()) / (1000 * 60 * 60 * 24));
+    const numDiarias = (checkin && checkout) ? Math.ceil((checkout.getTime() - checkin.getTime()) / (1000 * 60 * 60 * 24)) : 0;
     let valorTotal = new Prisma.Decimal(0);
 
     for (const leito of leitos) {
@@ -192,6 +192,7 @@ export async function createBooking(input: BookingInput) {
 export async function calculateEstimatedPrice(leitosIds: string[], checkIn: string, checkOut: string) {
   const checkin = parseDateUTC(checkIn);
   const checkout = parseDateUTC(checkOut);
+  if (!checkin || isNaN(checkin.getTime()) || !checkout || isNaN(checkout.getTime())) return 0;
   const numDiarias = Math.ceil((checkout.getTime() - checkin.getTime()) / (1000 * 60 * 60 * 24));
 
   const leitos = await prisma.leito.findMany({

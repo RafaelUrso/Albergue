@@ -18,7 +18,7 @@ export function parseDateUTC(dateStr: string): Date {
  * Converte um objeto Date para uma string "YYYY-MM-DD" baseada nos seus componentes UTC.
  */
 export function formatDateToISO(date: Date): string {
-  if (isNaN(date.getTime())) return '';
+  if (!date || isNaN(date.getTime())) return '';
   const year = date.getUTCFullYear();
   const month = String(date.getUTCMonth() + 1).padStart(2, '0');
   const day = String(date.getUTCDate()).padStart(2, '0');
@@ -30,7 +30,7 @@ export function formatDateToISO(date: Date): string {
  */
 export function formatDisplayDate(date: Date | string, locale: string): string {
   const d = typeof date === 'string' ? parseDateUTC(date) : date;
-  if (isNaN(d.getTime())) return '';
+  if (!d || isNaN(d.getTime())) return '';
 
   return d.toLocaleDateString(locale, {
     timeZone: 'UTC',

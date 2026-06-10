@@ -4,12 +4,13 @@ import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 import { getConfiguracao, updateConfiguracao } from '@/lib/actions/cancellation';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
 export default function AdminSettingsPage() {
   const t = useTranslations('Admin.settings');
   const { data: session, status } = useSession();
   const router = useRouter();
+  const { locale } = useParams();
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -60,7 +61,15 @@ export default function AdminSettingsPage() {
 
   return (
     <div className="pt-24 pb-12 px-4 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8">{t('title')}</h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold">{t('title')}</h1>
+        <button
+          onClick={() => router.push(`/${locale}/admin/dashboard`)}
+          className="text-gray-500 hover:text-gray-700 font-medium"
+        >
+          {t('backToDashboard')}
+        </button>
+      </div>
 
       <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm">
         <form onSubmit={handleSave} className="space-y-6">
