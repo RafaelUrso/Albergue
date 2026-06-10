@@ -2,6 +2,7 @@ import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import "./globals.css";
 import TopBar from "@/components/TopBar";
+import SessionProvider from "@/components/providers/SessionProvider";
 
 export default async function LocaleLayout({
   children,
@@ -16,10 +17,14 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className="antialiased">
-        <NextIntlClientProvider messages={messages}>
-          <TopBar />
-          {children}
-        </NextIntlClientProvider>
+        <SessionProvider>
+          <NextIntlClientProvider messages={messages}>
+            <TopBar />
+            <div className="pt-16">
+              {children}
+            </div>
+          </NextIntlClientProvider>
+        </SessionProvider>
       </body>
     </html>
   );

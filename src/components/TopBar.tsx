@@ -1,12 +1,22 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
+import DateRangeSelector from './DateRangeSelector';
+import GuestSelector from './GuestSelector';
+import Link from 'next/link';
+import { useCallback } from 'react';
 
 export default function TopBar() {
   const t = useTranslations('TopBar');
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { data: session } = useSession();
+
+  const currentLocale = pathname.split('/')[1] || 'pt-BR';
+  const isBookingPage = pathname.includes('/booking/results');
 
   const toggleLanguage = () => {
     const newLocale = pathname.startsWith('/en') ? 'pt-BR' : 'en';
@@ -14,38 +24,76 @@ export default function TopBar() {
     router.push(newPath || `/${newLocale}`);
   };
 
-  return (
-    <header className="fixed top-0 left-0 right-0 h-16 bg-azul-principal text-white flex items-center px-4 md:px-8 z-50">
-      {/* Esquerda: Nome do Hostel */}
-      <div className="flex-shrink-0 font-bold text-xl uppercase tracking-wider">
-        {t('hostelName')}
-      </div>
+  const handleSearchUpdate = useCallback((updates: Record<string, string>) => {
+    const params = new URLSearchParams(searchParams.toString());
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value) params.set(key, value);
+      else params.delete(key);
+    });
 
-      {/* Centro: Busca Rápida (Placeholders) */}
-      <div className="flex-grow flex justify-center gap-4 hidden md:flex">
-        <button className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-md transition text-sm">
-          {t('search.dates')}
-        </button>
-        <button className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-md transition text-sm">
-          {t('search.guests')}
-        </button>
+    if (isBookingPage) {
+      router.push(`${pathname}?${params.toString()}`);
+    } else {
+      // Se não estiver na página de resultados, redireciona para lá ao mudar algo importante?
+      // Ou apenas guarda no estado global? Por simplicidade aqui, se mudar, vamos para resultados.
+      router.push(`/${currentLocale}/booking/results?${params.toString()}`);
+    }
+  }, [searchParams, pathname, router, currentLocale, isBookingPage]);
+
+  return (
+    <header className="fixed top-0 left-0 right-0 h-16 bg-azul-principal text-white flex items-center px-4 md:px-8 z-50 shadow-md">
+      {/* Esquerda: Nome do Hostel */}
+      <Link href={`/${currentLocale}`} className="flex-shrink-0 font-bold text-xl uppercase tracking-wider hover:opacity-80 transition">
+        {t('hostelName')}
+      </Link>
+
+      {/* Centro: Busca Rápida */}
+      <div className="flex-grow flex justify-center gap-4 hidden md:flex items-center">
+        <DateRangeSelector
+          initialCheckIn={searchParams.get('checkIn') || undefined}
+          initialCheckOut={searchParams.get('checkOut') || undefined}
+          onSelect={(checkIn, checkOut) => handleSearchUpdate({ checkIn, checkOut })}
+        />
+        <GuestSelector
+          initialAdults={parseInt(searchParams.get('adults') || '1')}
+          initialChildren={parseInt(searchParams.get('children') || '0')}
+          initialPcd={searchParams.get('hasPcd') === 'true'}
+          initialPcdCount={parseInt(searchParams.get('pcdCount') || '0')}
+          initialPcdDescription={searchParams.get('pcdDescription') || ''}
+          onUpdate={(data) => handleSearchUpdate({
+            adults: data.adults.toString(),
+            children: data.children.toString(),
+            hasPcd: data.hasPcd.toString(),
+            pcdCount: data.pcdCount.toString(),
+            pcdDescription: data.pcdDescription
+          })}
+        />
       </div>
 
       {/* Direita: Perfil, Config, Idioma */}
       <div className="flex items-center gap-2 md:gap-4 ml-auto">
-        <button className="hover:bg-white/10 p-2 rounded-full transition" title={t('profile')}>
-          <span className="sr-only">{t('profile')}</span>
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-        </button>
-        <button className="hover:bg-white/10 p-2 rounded-full transition" title={t('settings')}>
-          <span className="sr-only">{t('settings')}</span>
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-        </button>
+        {session ? (
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium hidden lg:inline">{session.user?.name}</span>
+            <button
+              onClick={() => signOut()}
+              className="hover:bg-white/10 p-2 rounded-full transition"
+              title={t('logout')}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+            </button>
+          </div>
+        ) : (
+          <Link
+            href={`/${currentLocale}/auth/login`}
+            className="bg-white/20 hover:bg-white/30 px-4 py-1 rounded transition text-sm font-bold"
+          >
+            {t('login')}
+          </Link>
+        )}
+
         <button
           onClick={toggleLanguage}
           className="bg-white text-azul-principal font-bold px-3 py-1 rounded hover:bg-opacity-90 transition text-sm"
