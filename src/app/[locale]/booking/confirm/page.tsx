@@ -22,6 +22,7 @@ interface ConfirmPageProps {
 
 export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
   const t = useTranslations('Booking.confirm');
+  const tp = useTranslations('Booking.payment');
   const router = useRouter();
   const { locale } = useParams();
   const { status } = useSession();
@@ -147,22 +148,22 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
           </div>
 
           <div className="space-y-4">
-            <h3 className="font-bold text-gray-700">{t('../payment.title')}</h3>
+            <h3 className="font-bold text-gray-700">{tp('title')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="col-span-2">
-                <label className="block text-xs font-bold text-gray-500 uppercase">{t('../payment.cardNumber')}</label>
+                <label className="block text-xs font-bold text-gray-500 uppercase">{tp('cardNumber')}</label>
                 <input
                   type="text"
-                  placeholder="tok_visa"
+                  placeholder="4242 4242 4242 4242"
                   className="w-full border rounded-lg p-2 mt-1"
                   value={paymentData.cardNumber}
                   onChange={e => setPaymentData({...paymentData, cardNumber: e.target.value})}
                   required
                 />
-                <p className="text-[10px] text-gray-400 mt-1">{t('../payment.mockHint')}</p>
+                <p className="text-[10px] text-gray-400 mt-1">{tp('mockHint')}</p>
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase">{t('../payment.expiry')}</label>
+                <label className="block text-xs font-bold text-gray-500 uppercase">{tp('expiry')}</label>
                 <input
                   type="text"
                   placeholder="MM/AA"
@@ -173,7 +174,7 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase">{t('../payment.cvv')}</label>
+                <label className="block text-xs font-bold text-gray-500 uppercase">{tp('cvv')}</label>
                 <input
                   type="text"
                   placeholder="123"
@@ -184,7 +185,7 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
                 />
               </div>
               <div className="col-span-2">
-                <label className="block text-xs font-bold text-gray-500 uppercase">{t('../payment.cardName')}</label>
+                <label className="block text-xs font-bold text-gray-500 uppercase">{tp('cardName')}</label>
                 <input
                   type="text"
                   className="w-full border rounded-lg p-2 mt-1"

@@ -20,8 +20,13 @@ export async function searchAvailableBeds(params: {
   incidenciaSol?: LeitoIncidenciaSol;
 }) {
   const checkin = new Date(params.checkIn);
-  checkin.setUTCHours(12, 0, 0, 0);
   const checkout = new Date(params.checkOut);
+
+  if (isNaN(checkin.getTime()) || isNaN(checkout.getTime())) {
+    return [];
+  }
+
+  checkin.setUTCHours(12, 0, 0, 0);
   checkout.setUTCHours(12, 0, 0, 0);
 
   // 1. Encontrar leitos ocupados no período (colisão de datas)
@@ -180,7 +185,11 @@ export async function createBooking(input: BookingInput) {
       });
     }
 
-    return reserva;
+    return {
+      ...reserva,
+      valorTotal: Number(reserva.valorTotal),
+      valorPago: Number(reserva.valorPago)
+    };
   });
 }
 
@@ -224,9 +233,11 @@ export async function processPayment(reservaId: string, gatewayToken: string) {
     if (!reserva) throw new Error("Reserva não encontrada");
 
     // Simulação de processamento de pagamento
-    // Segurança: NÃO armazenamos o gatewayToken se ele parecer um número de cartão real
-    const isToken = gatewayToken.startsWith("tok_");
-    const sanitizedToken = isToken ? gatewayToken : "masked_card_" + gatewayToken.slice(-4);
+    // Aceita tok_ ou o cartão de teste 4242 4242 4242 4242
+    const normalizedToken = gatewayToken.replace(/\s/g, '');
+    const isToken = normalizedToken.startsWith("tok_") || normalizedToken === "4242424242424242";
+
+    const sanitizedToken = isToken ? normalizedToken : "masked_card_" + normalizedToken.slice(-4);
     const paymentSuccessful = isToken;
 
     if (!paymentSuccessful) {
@@ -267,6 +278,9 @@ export async function processPayment(reservaId: string, gatewayToken: string) {
       }
     });
 
-    return pagamento;
+    return {
+      ...pagamento,
+      valor: Number(pagamento.valor)
+    };
   });
 }

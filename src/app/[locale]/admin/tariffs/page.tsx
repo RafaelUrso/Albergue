@@ -3,17 +3,27 @@
 import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 import { getAllTariffs, saveTariff, deleteTariff } from '@/lib/actions/tariff';
-import { QuartoTipo, TarifaTipo, Tarifa } from '@prisma/client';
+import { QuartoTipo, TarifaTipo } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
+type TarifaDisplay = {
+  id: string;
+  quartoTipo: QuartoTipo;
+  valorDiaria: number;
+  tipo: TarifaTipo;
+  dataInicio: Date | null;
+  dataFim: Date | null;
+  criadoPorId: string;
+  createdAt: Date;
+};
+
 export default function TariffsPage() {
   const t = useTranslations('Admin.tariffs');
-  const te = useTranslations('Enums');
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const [tariffs, setTariffs] = useState<Tarifa[]>([]);
+  const [tariffs, setTariffs] = useState<TarifaDisplay[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -83,7 +93,7 @@ export default function TariffsPage() {
     }
   };
 
-  const handleEdit = (tariff: Tarifa) => {
+  const handleEdit = (tariff: TarifaDisplay) => {
     setEditingId(tariff.id);
     setFormData({
       quartoTipo: tariff.quartoTipo,
@@ -149,7 +159,7 @@ export default function TariffsPage() {
                 type="number"
                 step="0.01"
                 value={formData.valorDiaria}
-                onChange={e => setFormData({...formData, valorDiaria: parseFloat(e.target.value)})}
+                onChange={e => setFormData({...formData, valorDiaria: parseFloat(e.target.value) || 0})}
                 className="w-full border rounded-lg p-2"
                 required
               />
@@ -241,10 +251,16 @@ export default function TariffsPage() {
                       {tariff.dataFim ? ` to ${new Date(tariff.dataFim).toLocaleDateString()}` : ''}
                     </td>
                     <td className="p-4 text-right space-x-2">
-                      <button onClick={() => handleEdit(tariff)} className="text-azul-principal text-sm font-bold hover:underline">
+                      <button
+                        onClick={() => handleEdit(tariff)}
+                        className="bg-azul-principal text-white px-3 py-1 rounded text-xs font-bold hover:bg-blue-700 transition"
+                      >
                         {t('edit')}
                       </button>
-                      <button onClick={() => handleDelete(tariff.id)} className="text-red-600 text-sm font-bold hover:underline">
+                      <button
+                        onClick={() => handleDelete(tariff.id)}
+                        className="border border-red-600 text-red-600 px-3 py-1 rounded text-xs font-bold hover:bg-red-50 transition"
+                      >
                         {t('delete')}
                       </button>
                     </td>
