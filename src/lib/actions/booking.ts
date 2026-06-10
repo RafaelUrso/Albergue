@@ -3,7 +3,8 @@
 import { prisma } from "@/lib/prisma";
 import { bookingSchema, BookingInput } from "@/lib/validations/booking";
 import { auth } from "@/auth";
-import { Prisma, QuartoGenero, LeitoPosicao, LeitoLocalizacao, LeitoIncidenciaSol } from "@prisma/client";
+import { Prisma, QuartoGenero, LeitoPosicao, LeitoLocalizacao, LeitoIncidenciaSol, PagamentoStatus, PagamentoMetodo } from "@prisma/client";
+import { getTariffForDate } from "./tariff";
 
 /**
  * RF-011 / RN-011: Motor de reservas com anti-double-booking
@@ -58,24 +59,14 @@ export async function searchAvailableBeds(params: {
     }
   });
 
-  // Buscar tarifas atuais para os tipos de quarto encontrados
-  const tiposEncontrados = Array.from(new Set(leitos.map(l => l.quarto.tipo)));
-  const tarifas = await prisma.tarifa.findMany({
-    where: {
-      quartoTipo: { in: tiposEncontrados },
-      tipo: 'PADRAO' // Ou lógica mais complexa se houver sazonais
-    },
-    orderBy: { createdAt: 'desc' }
-  });
-
-  // Mapear leitos com suas respectivas tarifas
-  const leitosComTarifa = leitos.map(leito => {
-    const tarifa = tarifas.find(t => t.quartoTipo === leito.quarto.tipo);
+  // Mapear leitos com suas respectivas tarifas para a DATA DE CHECKIN
+  const leitosComTarifa = await Promise.all(leitos.map(async (leito) => {
+    const tarifa = await getTariffForDate(leito.quarto.tipo, checkin);
     return {
       ...leito,
       valorDiaria: tarifa ? Number(tarifa.valorDiaria) : 0
     };
-  });
+  }));
 
   return leitosComTarifa;
 }
@@ -140,12 +131,13 @@ export async function createBooking(input: BookingInput) {
     let valorTotal = new Prisma.Decimal(0);
 
     for (const leito of leitos) {
-      const tarifa = await tx.tarifa.findFirst({
-        where: { quartoTipo: leito.quarto.tipo },
-        orderBy: { createdAt: 'desc' }
-      });
-      if (!tarifa) throw new Error(`Tarifa não definida para o tipo ${leito.quarto.tipo}`);
-      valorTotal = valorTotal.add(tarifa.valorDiaria.mul(numDiarias));
+      for (let i = 0; i < numDiarias; i++) {
+        const currentDay = new Date(checkin);
+        currentDay.setUTCDate(checkin.getUTCDate() + i);
+        const tarifa = await getTariffForDate(leito.quarto.tipo, currentDay);
+        if (!tarifa) throw new Error(`Tarifa não definida para o tipo ${leito.quarto.tipo} em ${currentDay.toISOString()}`);
+        valorTotal = valorTotal.add(tarifa.valorDiaria);
+      }
     }
 
     const reserva = await tx.reserva.create({
@@ -194,7 +186,9 @@ export async function createBooking(input: BookingInput) {
 
 export async function calculateEstimatedPrice(leitosIds: string[], checkIn: string, checkOut: string) {
   const checkin = new Date(checkIn);
+  checkin.setUTCHours(12, 0, 0, 0);
   const checkout = new Date(checkOut);
+  checkout.setUTCHours(12, 0, 0, 0);
   const numDiarias = Math.ceil((checkout.getTime() - checkin.getTime()) / (1000 * 60 * 60 * 24));
 
   const leitos = await prisma.leito.findMany({
@@ -205,14 +199,74 @@ export async function calculateEstimatedPrice(leitosIds: string[], checkIn: stri
   let valorTotal = 0;
 
   for (const leito of leitos) {
-    const tarifa = await prisma.tarifa.findFirst({
-      where: { quartoTipo: leito.quarto.tipo },
-      orderBy: { createdAt: 'desc' }
-    });
-    if (tarifa) {
-      valorTotal += Number(tarifa.valorDiaria) * numDiarias;
+    for (let i = 0; i < numDiarias; i++) {
+      const currentDay = new Date(checkin);
+      currentDay.setUTCDate(checkin.getUTCDate() + i);
+      const tarifa = await getTariffForDate(leito.quarto.tipo, currentDay);
+      if (tarifa) {
+        valorTotal += Number(tarifa.valorDiaria);
+      }
     }
   }
 
   return valorTotal;
+}
+
+export async function processPayment(reservaId: string, gatewayToken: string) {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Não autenticado");
+
+  return await prisma.$transaction(async (tx) => {
+    const reserva = await tx.reserva.findUnique({
+      where: { id: reservaId },
+    });
+
+    if (!reserva) throw new Error("Reserva não encontrada");
+
+    // Simulação de processamento de pagamento
+    // Segurança: NÃO armazenamos o gatewayToken se ele parecer um número de cartão real
+    const isToken = gatewayToken.startsWith("tok_");
+    const sanitizedToken = isToken ? gatewayToken : "masked_card_" + gatewayToken.slice(-4);
+    const paymentSuccessful = isToken;
+
+    if (!paymentSuccessful) {
+      await tx.pagamento.create({
+        data: {
+          reservaId,
+          gatewayTransactionId: "FAILED_" + sanitizedToken + "_" + Date.now(),
+          valor: reserva.valorTotal,
+          status: "FALHADO",
+          metodo: "CARTAO_CREDITO",
+        }
+      });
+      throw new Error("Pagamento recusado pelo gateway.");
+    }
+
+    const pagamento = await tx.pagamento.create({
+      data: {
+        reservaId,
+        gatewayTransactionId: "MOCK_" + sanitizedToken + "_" + Date.now(),
+        valor: reserva.valorTotal,
+        status: "CONCLUIDO",
+        metodo: "CARTAO_CREDITO",
+      }
+    });
+
+    await tx.reserva.update({
+      where: { id: reservaId },
+      data: {
+        valorPago: reserva.valorTotal,
+      }
+    });
+
+    // Registrar Aceite de Termos de forma imutável (Requirement Phase 6 / LGPD)
+    await tx.aceiteTermos.create({
+      data: {
+        usuarioId: session.user!.id!,
+        versaoTermo: "v1-2026", // Versão atual
+      }
+    });
+
+    return pagamento;
+  });
 }

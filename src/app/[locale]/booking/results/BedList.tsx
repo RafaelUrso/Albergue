@@ -9,6 +9,7 @@ interface Bed {
   codigo: string;
   posicao: string;
   localizacao: string;
+  incidenciaSol: string;
   valorDiaria: number;
   quarto: {
     nome: string;

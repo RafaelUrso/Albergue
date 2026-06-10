@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useState, use, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { createBooking, calculateEstimatedPrice } from '@/lib/actions/booking';
+import { createBooking, calculateEstimatedPrice, processPayment } from '@/lib/actions/booking';
 import { useSession } from 'next-auth/react';
 
 interface ConfirmPageProps {
@@ -57,6 +57,13 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
     }
   }, [status, locale, router]);
 
+  const [paymentData, setPaymentData] = useState({
+    cardNumber: '',
+    expiry: '',
+    cvv: '',
+    cardName: ''
+  });
+
   if (status === 'unauthenticated' || status === 'loading') {
     return (
       <div className="pt-24 pb-12 px-4 text-center">
@@ -73,6 +80,7 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
     try {
       const companions = sParams.companions ? JSON.parse(sParams.companions) : [];
 
+      // 1. Criar Reserva
       const result = await createBooking({
         dataCheckin: sParams.checkIn,
         dataCheckout: sParams.checkOut,
@@ -86,6 +94,10 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
           descricaoDeficiencias: sParams.pcdDescription,
         }
       });
+
+      // 2. Processar Pagamento (Mock)
+      // Usamos o número do cartão como o "token" para o nosso mock
+      await processPayment(result.id, paymentData.cardNumber);
 
       router.push(`/${locale}/booking/success?bookingId=${result.id}`);
     } catch (err: unknown) {
@@ -132,6 +144,56 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
                 ? new Intl.NumberFormat(locale as string, { style: 'currency', currency: 'BRL' }).format(totalPrice)
                 : t('calculating')}
             </span>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="font-bold text-gray-700">{t('../payment.title')}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="col-span-2">
+                <label className="block text-xs font-bold text-gray-500 uppercase">{t('../payment.cardNumber')}</label>
+                <input
+                  type="text"
+                  placeholder="tok_visa"
+                  className="w-full border rounded-lg p-2 mt-1"
+                  value={paymentData.cardNumber}
+                  onChange={e => setPaymentData({...paymentData, cardNumber: e.target.value})}
+                  required
+                />
+                <p className="text-[10px] text-gray-400 mt-1">{t('../payment.mockHint')}</p>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase">{t('../payment.expiry')}</label>
+                <input
+                  type="text"
+                  placeholder="MM/AA"
+                  className="w-full border rounded-lg p-2 mt-1"
+                  value={paymentData.expiry}
+                  onChange={e => setPaymentData({...paymentData, expiry: e.target.value})}
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-500 uppercase">{t('../payment.cvv')}</label>
+                <input
+                  type="text"
+                  placeholder="123"
+                  className="w-full border rounded-lg p-2 mt-1"
+                  value={paymentData.cvv}
+                  onChange={e => setPaymentData({...paymentData, cvv: e.target.value})}
+                  required
+                />
+              </div>
+              <div className="col-span-2">
+                <label className="block text-xs font-bold text-gray-500 uppercase">{t('../payment.cardName')}</label>
+                <input
+                  type="text"
+                  className="w-full border rounded-lg p-2 mt-1"
+                  value={paymentData.cardName}
+                  onChange={e => setPaymentData({...paymentData, cardName: e.target.value})}
+                  required
+                />
+              </div>
+            </div>
           </div>
 
           {error && (

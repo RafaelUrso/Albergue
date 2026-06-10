@@ -104,6 +104,14 @@
       "message": "Sua reserva foi realizada com sucesso.",
       "bookingNumber": "Número da Reserva",
       "backHome": "Voltar para Início"
+    },
+    "payment": {
+      "title": "Pagamento",
+      "cardNumber": "Número do Cartão",
+      "expiry": "Validade (MM/AA)",
+      "cvv": "CVV",
+      "cardName": "Nome no Cartão",
+      "mockHint": "Use 'tok_visa' para simular sucesso ou qualquer outro valor para falha."
     }
   },
   "HostelMap": {
@@ -121,6 +129,26 @@
       "sharedBath": "Banheiro Compartilhado",
       "commonArea": "Áreas Comuns / Lazer",
       "bed": "Leito / Cama"
+    }
+  },
+  "Admin": {
+    "tariffs": {
+      "title": "Gerenciamento de Tarifas",
+      "standard": "Padrão",
+      "seasonal": "Sazonal",
+      "promotional": "Promocional",
+      "add": "Adicionar Tarifa",
+      "edit": "Editar",
+      "delete": "Excluir",
+      "save": "Salvar",
+      "roomType": "Tipo de Quarto",
+      "dailyRate": "Valor da Diária",
+      "startDate": "Data Início",
+      "endDate": "Data Fim",
+      "type": "Tipo",
+      "noTariffs": "Nenhuma tarifa cadastrada.",
+      "confirmDelete": "Tem certeza que deseja excluir esta tarifa?",
+      "logs": "Log de Auditoria de Tarifas"
     }
   },
   "Enums": {
