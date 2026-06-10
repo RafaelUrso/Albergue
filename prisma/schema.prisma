@@ -239,3 +239,9 @@ model AceiteTermos {
   versaoTermo String
   aceitoEm  DateTime @default(now())
 }
+
+model Configuracao {
+  id    String @id @default(uuid())
+  chave String @unique
+  valor String
+}

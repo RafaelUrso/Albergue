@@ -3,6 +3,7 @@ import { searchAvailableBeds } from '@/lib/actions/booking';
 import BedList from './BedList';
 import ResultsFilters from './ResultsFilters';
 import { QuartoGenero, LeitoPosicao, LeitoLocalizacao, LeitoIncidenciaSol } from '@prisma/client';
+import { formatDisplayDate } from '@/lib/date-utils';
 
 interface ResultsPageProps {
   params: Promise<{ locale: string }>;
@@ -44,7 +45,7 @@ export default async function ResultsPage({ params, searchParams }: ResultsPageP
         <div>
           <h1 className="text-3xl font-bold">{t('title')}</h1>
           <p className="text-gray-600">
-            {new Date(sParams.checkIn).toLocaleDateString(locale)} — {new Date(sParams.checkOut).toLocaleDateString(locale)} • {sParams.adults} {t('guests')}
+            {formatDisplayDate(sParams.checkIn, locale)} — {formatDisplayDate(sParams.checkOut, locale)} • {sParams.adults} {t('guests')}
           </p>
         </div>
       </div>

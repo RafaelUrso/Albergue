@@ -5,6 +5,7 @@ import { bookingSchema, BookingInput } from "@/lib/validations/booking";
 import { auth } from "@/auth";
 import { Prisma, QuartoGenero, LeitoPosicao, LeitoLocalizacao, LeitoIncidenciaSol, PagamentoStatus, PagamentoMetodo } from "@prisma/client";
 import { getTariffForDate } from "./tariff";
+import { parseDateUTC } from "@/lib/date-utils";
 
 /**
  * RF-011 / RN-011: Motor de reservas com anti-double-booking
@@ -19,15 +20,12 @@ export async function searchAvailableBeds(params: {
   localizacao?: LeitoLocalizacao;
   incidenciaSol?: LeitoIncidenciaSol;
 }) {
-  const checkin = new Date(params.checkIn);
-  const checkout = new Date(params.checkOut);
+  const checkin = parseDateUTC(params.checkIn);
+  const checkout = parseDateUTC(params.checkOut);
 
   if (isNaN(checkin.getTime()) || isNaN(checkout.getTime())) {
     return [];
   }
-
-  checkin.setUTCHours(12, 0, 0, 0);
-  checkout.setUTCHours(12, 0, 0, 0);
 
   // 1. Encontrar leitos ocupados no período (colisão de datas)
   const ocupados = await prisma.reservaLeito.findMany({
@@ -86,10 +84,8 @@ export async function createBooking(input: BookingInput) {
   const { dataCheckin, dataCheckout, acompanhantes, declaracaoGrupo, quartoInteiroId } = validatedData;
   let { leitosIds } = validatedData;
 
-  const checkin = new Date(dataCheckin);
-  checkin.setUTCHours(12, 0, 0, 0);
-  const checkout = new Date(dataCheckout);
-  checkout.setUTCHours(12, 0, 0, 0);
+  const checkin = parseDateUTC(dataCheckin);
+  const checkout = parseDateUTC(dataCheckout);
 
   if (checkout <= checkin) {
     throw new Error("A data de check-out deve ser posterior ao check-in.");
@@ -194,10 +190,8 @@ export async function createBooking(input: BookingInput) {
 }
 
 export async function calculateEstimatedPrice(leitosIds: string[], checkIn: string, checkOut: string) {
-  const checkin = new Date(checkIn);
-  checkin.setUTCHours(12, 0, 0, 0);
-  const checkout = new Date(checkOut);
-  checkout.setUTCHours(12, 0, 0, 0);
+  const checkin = parseDateUTC(checkIn);
+  const checkout = parseDateUTC(checkOut);
   const numDiarias = Math.ceil((checkout.getTime() - checkin.getTime()) / (1000 * 60 * 60 * 24));
 
   const leitos = await prisma.leito.findMany({

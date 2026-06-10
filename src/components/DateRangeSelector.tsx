@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useState, useMemo } from 'react';
+import { getTodayISO, parseDateUTC, formatDateToISO } from '@/lib/date-utils';
 
 interface DateRangeSelectorProps {
   initialCheckIn?: string;
@@ -12,7 +13,7 @@ interface DateRangeSelectorProps {
 export default function DateRangeSelector({ initialCheckIn, initialCheckOut, onSelect }: DateRangeSelectorProps) {
   const t = useTranslations('TopBar.search');
 
-  const today = useMemo(() => new Date().toISOString().split('T')[0], []);
+  const today = useMemo(() => getTodayISO(), []);
 
   const [checkIn, setCheckIn] = useState(initialCheckIn || today);
   const [checkOut, setCheckOut] = useState(initialCheckOut || '');
@@ -22,7 +23,9 @@ export default function DateRangeSelector({ initialCheckIn, initialCheckOut, onS
     setCheckIn(val);
     let newCheckOut = checkOut;
     if (checkOut && val >= checkOut) {
-      newCheckOut = new Date(new Date(val).getTime() + 86400000).toISOString().split('T')[0];
+      const checkInDate = parseDateUTC(val);
+      const nextDay = new Date(checkInDate.getTime() + 86400000);
+      newCheckOut = formatDateToISO(nextDay);
       setCheckOut(newCheckOut);
     }
     if (onSelect) onSelect(val, newCheckOut);
@@ -34,7 +37,12 @@ export default function DateRangeSelector({ initialCheckIn, initialCheckOut, onS
     if (onSelect) onSelect(checkIn, val);
   };
 
-  const minCheckOut = checkIn ? new Date(new Date(checkIn).getTime() + 86400000).toISOString().split('T')[0] : today;
+  const minCheckOut = useMemo(() => {
+    if (!checkIn) return today;
+    const checkInDate = parseDateUTC(checkIn);
+    const nextDay = new Date(checkInDate.getTime() + 86400000);
+    return formatDateToISO(nextDay);
+  }, [checkIn, today]);
 
   return (
     <div className="flex flex-col md:flex-row items-center gap-2 bg-white/10 p-1 rounded-lg">

@@ -5,7 +5,8 @@ import { useState, useEffect } from 'react';
 import { getAllTariffs, saveTariff, deleteTariff } from '@/lib/actions/tariff';
 import { QuartoTipo, TarifaTipo } from '@prisma/client';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
+import { formatDisplayDate, formatDateToISO } from '@/lib/date-utils';
 
 type TarifaDisplay = {
   id: string;
@@ -22,6 +23,7 @@ export default function TariffsPage() {
   const t = useTranslations('Admin.tariffs');
   const { data: session, status } = useSession();
   const router = useRouter();
+  const { locale } = useParams();
 
   const [tariffs, setTariffs] = useState<TarifaDisplay[]>([]);
   const [loading, setLoading] = useState(true);
@@ -99,8 +101,8 @@ export default function TariffsPage() {
       quartoTipo: tariff.quartoTipo,
       valorDiaria: Number(tariff.valorDiaria),
       tipo: tariff.tipo,
-      dataInicio: tariff.dataInicio ? new Date(tariff.dataInicio).toISOString().split('T')[0] : '',
-      dataFim: tariff.dataFim ? new Date(tariff.dataFim).toISOString().split('T')[0] : '',
+      dataInicio: tariff.dataInicio ? formatDateToISO(new Date(tariff.dataInicio)) : '',
+      dataFim: tariff.dataFim ? formatDateToISO(new Date(tariff.dataFim)) : '',
     });
   };
 
@@ -247,8 +249,8 @@ export default function TariffsPage() {
                       {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(tariff.valorDiaria))}
                     </td>
                     <td className="p-4 text-xs text-gray-500">
-                      {tariff.dataInicio ? new Date(tariff.dataInicio).toLocaleDateString() : '-'}
-                      {tariff.dataFim ? ` to ${new Date(tariff.dataFim).toLocaleDateString()}` : ''}
+                      {tariff.dataInicio ? formatDisplayDate(new Date(tariff.dataInicio), locale as string) : '-'}
+                      {tariff.dataFim ? ` to ${formatDisplayDate(new Date(tariff.dataFim), locale as string)}` : ''}
                     </td>
                     <td className="p-4 text-right space-x-2">
                       <button
