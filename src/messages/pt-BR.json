@@ -1,17 +1,34 @@
 {
   "HomePage": {
     "title": "Bem-vindo ao Albergue do Sr. Almeida",
-    "description": "Seu porto seguro em Santa Teresa, Rio de Janeiro."
+    "description": "Seu porto seguro em Santa Teresa, Rio de Janeiro.",
+    "search": "Buscar"
   },
   "TopBar": {
     "hostelName": "Sr. Almeida",
     "search": {
       "dates": "Datas",
-      "guests": "Pessoas"
+      "guests": "Pessoas",
+      "checkin": "Check-in",
+      "checkout": "Check-out"
     },
     "profile": "Perfil",
     "settings": "Configurações",
-    "language": "Idioma"
+    "language": "Idioma",
+    "login": "Entrar",
+    "logout": "Sair"
+  },
+  "Selectors": {
+    "guests": {
+      "adults": "Adultos",
+      "children": "Crianças",
+      "pcd": "Há PCD no grupo?",
+      "yes": "Sim",
+      "no": "Não",
+      "pcdCount": "Quantidade de PCD",
+      "pcdDescription": "Descreva as necessidades/deficiências",
+      "close": "Confirmar"
+    }
   },
   "Auth": {
     "loginTitle": "Login",
@@ -29,6 +46,43 @@
     "loginButton": "Entrar",
     "loading": "Carregando...",
     "forgotPassword": "Esqueci minha senha"
+  },
+  "Booking": {
+    "results": {
+      "title": "Leitos Disponíveis",
+      "filters": "Filtros",
+      "noResults": "Nenhum leito disponível para as datas selecionadas.",
+      "bathroom": "Banheiro",
+      "private": "Privativo",
+      "shared": "Compartilhado",
+      "gender": "Gênero",
+      "male": "Masculino",
+      "female": "Feminino",
+      "mixed": "Misto",
+      "select": "Selecionar"
+    },
+    "select": {
+      "title": "Identificar Hóspedes",
+      "companion": "Acompanhante",
+      "name": "Nome Completo",
+      "document": "Documento",
+      "continue": "Continuar"
+    },
+    "confirm": {
+      "title": "Confirmar Reserva",
+      "summary": "Resumo da Reserva",
+      "period": "Período",
+      "nights": "Noites",
+      "total": "Valor Total",
+      "termsAccept": "Li e aceito os Termos de Uso",
+      "confirmButton": "Finalizar Reserva"
+    },
+    "success": {
+      "title": "Reserva Confirmada!",
+      "message": "Sua reserva foi realizada com sucesso.",
+      "bookingNumber": "Número da Reserva",
+      "backHome": "Voltar para Início"
+    }
   },
   "HostelMap": {
     "title": "Mapa Visual do Albergue",
