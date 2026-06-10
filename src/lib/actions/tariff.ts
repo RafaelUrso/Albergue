@@ -56,9 +56,14 @@ export async function getAllTariffs() {
   if (!session?.user?.id || !["ADMIN_GERAL", "ADMIN_FINANCEIRO"].includes((session.user as { perfil?: string }).perfil || "")) {
     throw new Error("Não autorizado");
   }
-  return await prisma.tarifa.findMany({
+  const tariffs = await prisma.tarifa.findMany({
     orderBy: { createdAt: "desc" },
   });
+
+  return tariffs.map(t => ({
+    ...t,
+    valorDiaria: Number(t.valorDiaria)
+  }));
 }
 
 export async function saveTariff(data: {
@@ -118,7 +123,10 @@ export async function saveTariff(data: {
     });
 
     revalidatePath("/admin/tariffs");
-    return tariff;
+    return {
+      ...tariff,
+      valorDiaria: Number(tariff.valorDiaria)
+    };
   });
 }
 

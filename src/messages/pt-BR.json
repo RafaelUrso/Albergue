@@ -111,7 +111,7 @@
       "expiry": "Validade (MM/AA)",
       "cvv": "CVV",
       "cardName": "Nome no Cartão",
-      "mockHint": "Use 'tok_visa' para simular sucesso ou qualquer outro valor para falha."
+      "mockHint": "Use '4242 4242 4242 4242' ou 'tok_visa' para simular sucesso."
     }
   },
   "HostelMap": {
@@ -148,7 +148,8 @@
       "type": "Tipo",
       "noTariffs": "Nenhuma tarifa cadastrada.",
       "confirmDelete": "Tem certeza que deseja excluir esta tarifa?",
-      "logs": "Log de Auditoria de Tarifas"
+      "logs": "Log de Auditoria de Tarifas",
+      "loading": "Carregando tarifas..."
     }
   },
   "Enums": {

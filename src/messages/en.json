@@ -111,7 +111,7 @@
       "expiry": "Expiry (MM/YY)",
       "cvv": "CVV",
       "cardName": "Cardholder Name",
-      "mockHint": "Use 'tok_visa' to simulate success or any other value for failure."
+      "mockHint": "Use '4242 4242 4242 4242' or 'tok_visa' to simulate success."
     }
   },
   "HostelMap": {
@@ -148,7 +148,8 @@
       "type": "Type",
       "noTariffs": "No tariffs registered.",
       "confirmDelete": "Are you sure you want to delete this tariff?",
-      "logs": "Tariff Audit Logs"
+      "logs": "Tariff Audit Logs",
+      "loading": "Loading tariffs..."
     }
   },
   "Enums": {
