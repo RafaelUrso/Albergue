@@ -179,7 +179,11 @@ export async function cancelReservation(reservaId: string) {
     revalidatePath("/account/reservations");
     revalidatePath("/admin/dashboard");
 
-    return cancelamento;
+    return {
+      ...cancelamento,
+      valorEstornado: Number(cancelamento.valorEstornado),
+      taxaRetida: Number(cancelamento.taxaRetida),
+    };
   });
 }
 

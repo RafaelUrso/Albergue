@@ -84,6 +84,11 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
     try {
       const companions = sParams.companions ? JSON.parse(sParams.companions) : [];
 
+      const safeParseInt = (val: string | undefined, fallback: number) => {
+        const parsed = parseInt(val || '');
+        return isNaN(parsed) ? fallback : parsed;
+      };
+
       // 1. Criar Reserva
       const result = await createBooking({
         dataCheckin: sParams.checkIn,
@@ -91,10 +96,10 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
         leitosIds: bedIds,
         acompanhantes: companions,
         declaracaoGrupo: {
-          qtdAdultos: parseInt(sParams.adults),
-          qtdCriancas: parseInt(sParams.children || '0'),
+          qtdAdultos: Math.max(1, safeParseInt(sParams.adults, 1)),
+          qtdCriancas: Math.max(0, safeParseInt(sParams.children, 0)),
           possuiPcd: sParams.hasPcd === 'true',
-          qtdPcd: parseInt(sParams.pcdCount || '0'),
+          qtdPcd: Math.max(0, safeParseInt(sParams.pcdCount, 0)),
           descricaoDeficiencias: sParams.pcdDescription,
         }
       });
