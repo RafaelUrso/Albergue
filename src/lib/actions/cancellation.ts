@@ -201,7 +201,10 @@ export async function getUserReservations() {
           }
         }
       },
-      cancelamento: true
+      cancelamento: true,
+      feedbacks: {
+        where: { usuarioId: session.user.id }
+      }
     },
     orderBy: { dataCheckin: "desc" }
   });
@@ -214,6 +217,7 @@ export async function getUserReservations() {
       ...r.cancelamento,
       valorEstornado: Number(r.cancelamento.valorEstornado),
       taxaRetida: Number(r.cancelamento.taxaRetida),
-    } : null
+    } : null,
+    hasFeedback: r.feedbacks.length > 0
   }));
 }
