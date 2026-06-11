@@ -167,7 +167,73 @@
       "saving": "Saving...",
       "saveSuccess": "Settings saved successfully!",
       "loading": "Loading settings..."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "activeReservations": "Active Reservations",
+      "presentGuests": "Guests Present",
+      "occupancyByType": "Occupancy by Type",
+      "revenue": "Revenue",
+      "day": "Day",
+      "week": "Week",
+      "month": "Month"
+    },
+    "reservations": {
+      "title": "Reservation Management",
+      "filter": "Filter",
+      "status": "Status",
+      "guest": "Guest",
+      "room": "Room",
+      "period": "Period",
+      "actions": "Actions",
+      "updateStatus": "Update Status"
+    },
+    "rooms": {
+      "title": "Room Management",
+      "add": "Add Room",
+      "name": "Name",
+      "type": "Type",
+      "gender": "Gender",
+      "status": "Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "manageBeds": "Manage Beds",
+      "bedsCount": "Beds Count"
+    },
+    "beds": {
+      "title": "Manage Beds - {room}",
+      "add": "Add Bed",
+      "code": "Code",
+      "position": "Position",
+      "location": "Location",
+      "sun": "Sun Exposure",
+      "status": "Status",
+      "available": "Available",
+      "unavailable": "Unavailable",
+      "maintenance": "Maintenance"
+    },
+    "feedback": {
+      "title": "Feedback Moderation",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "approve": "Approve",
+      "reject": "Reject",
+      "reply": "Reply",
+      "saveReply": "Save Reply"
     }
+  },
+  "Reception": {
+    "title": "Reception Panel",
+    "todayCheckins": "Expected Check-ins today",
+    "todayCheckouts": "Expected Check-outs today",
+    "alerts": "Alerts and Notifications",
+    "specialNeeds": "Special Needs (PWD/Minors)",
+    "registerGuest": "In-person Registration",
+    "confirmCheckin": "Confirm Check-in",
+    "confirmCheckout": "Confirm Check-out",
+    "noArrivals": "No check-ins expected for today.",
+    "noDepartures": "No check-outs expected for today."
   },
   "Account": {
     "reservations": {

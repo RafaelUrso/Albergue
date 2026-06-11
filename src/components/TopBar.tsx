@@ -17,7 +17,9 @@ export default function TopBar() {
 
   const currentLocale = pathname.split('/')[1] || 'pt-BR';
   const isBookingPage = pathname.includes('/booking/results');
-  const isAdmin = session?.user && ['ADMIN_GERAL', 'ADMIN_FINANCEIRO'].includes((session.user as { perfil?: string }).perfil || '');
+  const userPerfil = (session?.user as { perfil?: string })?.perfil;
+  const isAdmin = session?.user && ['ADMIN_GERAL', 'ADMIN_FINANCEIRO'].includes(userPerfil || '');
+  const isReception = session?.user && ['ADMIN_GERAL', 'RECEPCIONISTA'].includes(userPerfil || '');
 
   const toggleLanguage = () => {
     const newLocale = pathname.startsWith('/en') ? 'pt-BR' : 'en';
@@ -83,6 +85,11 @@ export default function TopBar() {
                 {isAdmin && (
                   <Link href={`/${currentLocale}/admin/dashboard`} className="text-[10px] uppercase font-black hover:underline text-white/80">
                     {t('adminPanel')}
+                  </Link>
+                )}
+                {isReception && (
+                  <Link href={`/${currentLocale}/reception`} className="text-[10px] uppercase font-black hover:underline text-white/80">
+                    Recepção
                   </Link>
                 )}
                 <Link href={`/${currentLocale}/account/reservations`} className="text-[10px] uppercase font-black hover:underline text-white/80">
