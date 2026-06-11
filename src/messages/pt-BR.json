@@ -167,7 +167,73 @@
       "saving": "Salvando...",
       "saveSuccess": "Configurações salvas com sucesso!",
       "loading": "Carregando configurações..."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "activeReservations": "Reservas Ativas",
+      "presentGuests": "Hóspedes Presentes",
+      "occupancyByType": "Ocupação por Tipo",
+      "revenue": "Receita",
+      "day": "Dia",
+      "week": "Semana",
+      "month": "Mês"
+    },
+    "reservations": {
+      "title": "Gestão de Reservas",
+      "filter": "Filtrar",
+      "status": "Status",
+      "guest": "Hóspede",
+      "room": "Quarto",
+      "period": "Período",
+      "actions": "Ações",
+      "updateStatus": "Atualizar Status"
+    },
+    "rooms": {
+      "title": "Gestão de Quartos",
+      "add": "Adicionar Quarto",
+      "name": "Nome",
+      "type": "Tipo",
+      "gender": "Gênero",
+      "status": "Status",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "manageBeds": "Gerenciar Leitos",
+      "bedsCount": "Qtd Leitos"
+    },
+    "beds": {
+      "title": "Gerenciar Leitos - {room}",
+      "add": "Adicionar Leito",
+      "code": "Código",
+      "position": "Posição",
+      "location": "Localização",
+      "sun": "Incidência de Sol",
+      "status": "Status",
+      "available": "Disponível",
+      "unavailable": "Indisponível",
+      "maintenance": "Em Manutenção"
+    },
+    "feedback": {
+      "title": "Moderação de Feedback",
+      "pending": "Pendentes",
+      "approved": "Aprovados",
+      "rejected": "Rejeitados",
+      "approve": "Aprovar",
+      "reject": "Rejeitar",
+      "reply": "Responder",
+      "saveReply": "Salvar Resposta"
     }
+  },
+  "Reception": {
+    "title": "Painel da Recepção",
+    "todayCheckins": "Check-ins previstos para hoje",
+    "todayCheckouts": "Check-outs previstos para hoje",
+    "alerts": "Alertas e Notificações",
+    "specialNeeds": "Necessidades Especiais (PCD/Menores)",
+    "registerGuest": "Cadastro Presencial",
+    "confirmCheckin": "Confirmar Check-in",
+    "confirmCheckout": "Confirmar Check-out",
+    "noArrivals": "Nenhum check-in previsto para hoje.",
+    "noDepartures": "Nenhum check-out previsto para hoje."
   },
   "Account": {
     "reservations": {
