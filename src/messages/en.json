@@ -257,14 +257,151 @@
       "back": "Back",
       "processing": "Processing...",
       "cancelSuccess": "Reservation cancelled successfully!",
+      "leaveFeedback": "Leave Feedback",
+      "feedbackSubmitted": "Feedback submitted successfully!",
+      "details": {
+        "title": "Reservation Details",
+        "bed": "Bed",
+        "room": "Room",
+        "period": "Period",
+        "paid": "Paid Amount",
+        "status": "Status"
+      },
       "policies": {
         "GRATUITO_5_DIAS_OU_MAIS": "Free (>= 5 days notice)",
         "TAXA_1_A_4_DIAS": "Convenience fee (1 to 4 days notice)",
         "NO_DAY_OR_NOSHOW": "No-show / Same-day charge"
       }
+    },
+    "profile": {
+      "title": "My Profile",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "success": "Data updated successfully!",
+      "error": "Error updating data."
+    }
+  },
+  "RoomsPage": {
+    "title": "Our Rooms and Beds",
+    "description": "Discover our accommodations in Santa Teresa.",
+    "capacity": "{count} beds",
+    "bathroom": "Bathroom",
+    "private": "Private",
+    "shared": "Corridor (Shared)",
+    "gender": "Gender",
+    "tariff": "Rate starting at",
+    "bedDetails": "Bed Details"
+  },
+  "RulesPage": {
+    "title": "Hostel Rules",
+    "checkInOut": {
+      "title": "Check-in and Check-out",
+      "content": "Check-in starts at 12:00 PM. Check-out must be completed by 12:00 PM. Late check-out is subject to availability and additional fees."
+    },
+    "commonAreas": {
+      "title": "Common Areas",
+      "content": "Use of the community kitchen and laundry is allowed from 07:00 AM to 10:00 PM. Please keep the spaces clean after use."
+    },
+    "cancellation": {
+      "title": "Cancellation Policy",
+      "content": "Free cancellation up to 5 days before check-in. Between 1 and 4 days, an administrative fee applies. Same-day cancellations or no-shows are non-refundable."
+    },
+    "prohibitions": {
+      "title": "Prohibitions",
+      "content": "Pets are not allowed (except guide dogs). Alcohol consumption is prohibited in all common areas (allowed only in the annexed restaurant). Smoking is allowed only in designated areas."
+    },
+    "noElevator": {
+      "title": "Accessibility",
+      "content": "Note: The building is historic and does not have an elevator. Access to rooms is exclusively by stairs."
+    },
+    "lockers": {
+      "title": "Lockers and Responsibility",
+      "content": "Each guest has an individual locker with a key. The hostel is not responsible for items left outside the lockers. We offer optional insurance for valuable belongings."
+    },
+    "silence": {
+      "title": "Silence Policy",
+      "content": "Please respect the rest of other guests. Absolute silence hours are from 10:00 PM to 08:00 AM."
+    }
+  },
+  "AmenitiesPage": {
+    "title": "Amenities",
+    "ac": {
+      "title": "Air Conditioning",
+      "description": "All our rooms are equipped with air conditioning for your comfort."
+    },
+    "breakfast": {
+      "title": "Breakfast",
+      "description": "Included in the daily rate, served in the annexed outsourced refectory."
+    },
+    "kitchen": {
+      "title": "Community Kitchen",
+      "description": "Fully equipped for you to prepare your own meals."
+    },
+    "lavanderia": {
+      "title": "Laundry",
+      "description": "Washing and drying machines available for guest use."
+    },
+    "linen": {
+      "title": "Bed Kit",
+      "description": "Clean bed linens included. Free renewal every 7 days of stay."
+    },
+    "towels": {
+      "title": "Towels",
+      "description": "Bath towels available for all guests."
+    },
+    "lockers": {
+      "title": "Individual Lockers",
+      "description": "Lockers with keys to store your belongings safely."
+    },
+    "reception": {
+      "title": "24h Reception",
+      "description": "Our team is available 24 hours a day for your safety and support."
+    },
+    "parking": {
+      "title": "Parking",
+      "description": "Limited rotating spaces subject to availability (no guarantee of space)."
+    }
+  },
+  "FeedbackPage": {
+    "title": "Guest Reviews",
+    "leaveReview": "Leave your Review",
+    "form": {
+      "rating": "Rating",
+      "comment": "Comment",
+      "submit": "Submit Review",
+      "loginRequired": "You must be logged in and have a completed stay to review.",
+      "success": "Your review has been submitted and is awaiting moderation."
+    },
+    "noReviews": "There are no approved reviews yet."
+  },
+  "ContactPage": {
+    "title": "Contact and Groups",
+    "description": "Questions or reservations for large groups? Get in touch with us.",
+    "negotiation": {
+      "title": "Group Negotiation",
+      "content": "We offer special conditions for reservations of entire rooms or the complete hostel. Contact us for a personalized quote."
+    },
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "send": "Send Message",
+      "success": "Message sent successfully! We will contact you soon."
+    },
+    "info": {
+      "title": "Contact Information",
+      "address": "Paschoal Carlos Magno Street, Santa Teresa, Rio de Janeiro - RJ",
+      "phone": "+55 21 99999-9999",
+      "email": "contato@sralmeida.com.br"
     }
   },
   "Enums": {
+    "QuartoGenero": {
+      "MASCULINO": "Male",
+      "FEMININO": "Female",
+      "MISTO": "Mixed"
+    },
     "LeitoPosicao": {
       "BELICHE_SUPERIOR": "Top Bunk",
       "BELICHE_INFERIOR": "Bottom Bunk",
@@ -279,6 +416,12 @@
       "SOL_MANHA": "Morning Sun",
       "SOL_TARDE": "Afternoon Sun",
       "SEM_SOL": "No Sun"
+    },
+    "ReservaStatus": {
+      "CONFIRMADA": "Confirmed",
+      "CHECKIN": "Check-in",
+      "CHECKOUT": "Checkout",
+      "CANCELADA": "Cancelled"
     }
   }
 }

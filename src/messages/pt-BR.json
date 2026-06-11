@@ -257,14 +257,151 @@
       "back": "Voltar",
       "processing": "Processando...",
       "cancelSuccess": "Reserva cancelada com sucesso!",
+      "leaveFeedback": "Deixar Avaliação",
+      "feedbackSubmitted": "Avaliação enviada com sucesso!",
+      "details": {
+        "title": "Detalhes da Reserva",
+        "bed": "Leito",
+        "room": "Quarto",
+        "period": "Período",
+        "paid": "Valor Pago",
+        "status": "Status"
+      },
       "policies": {
         "GRATUITO_5_DIAS_OU_MAIS": "Gratuito (Antecedência >= 5 dias)",
         "TAXA_1_A_4_DIAS": "Taxa de conveniência (1 a 4 dias de antecedência)",
         "NO_DAY_OR_NOSHOW": "Cobrança de No-show / Dia do check-in"
       }
+    },
+    "profile": {
+      "title": "Meus Dados",
+      "save": "Salvar Alterações",
+      "saving": "Salvando...",
+      "success": "Dados atualizados com sucesso!",
+      "error": "Erro ao atualizar dados."
+    }
+  },
+  "RoomsPage": {
+    "title": "Nossos Quartos e Leitos",
+    "description": "Conheça nossas acomodações em Santa Teresa.",
+    "capacity": "{count} leitos",
+    "bathroom": "Banheiro",
+    "private": "Privativo",
+    "shared": "Corredor (Compartilhado)",
+    "gender": "Gênero",
+    "tariff": "Diária a partir de",
+    "bedDetails": "Detalhes do Leito"
+  },
+  "RulesPage": {
+    "title": "Regras do Albergue",
+    "checkInOut": {
+      "title": "Check-in e Check-out",
+      "content": "O check-in inicia às 12:00. O check-out deve ser realizado até às 12:00. Late check-out sujeito a disponibilidade e taxas adicionais."
+    },
+    "commonAreas": {
+      "title": "Áreas Comuns",
+      "content": "O uso da cozinha e lavanderia comunitárias é permitido das 07:00 às 22:00. Mantenha os espaços limpos após o uso."
+    },
+    "cancellation": {
+      "title": "Política de Cancelamento",
+      "content": "Cancelamento gratuito até 5 dias antes do check-in. Entre 1 e 4 dias, aplica-se uma taxa administrativa. Cancelamentos no dia ou no-show não são reembolsáveis."
+    },
+    "prohibitions": {
+      "title": "Proibições",
+      "content": "Não são permitidos animais de estimação (exceto cão-guia). É proibido o consumo de álcool em todas as áreas comuns (permitido apenas no restaurante anexo). Fumar é permitido apenas em áreas designadas."
+    },
+    "noElevator": {
+      "title": "Acessibilidade",
+      "content": "Atenção: O prédio é histórico e não possui elevador. O acesso aos quartos é feito exclusivamente por escadas."
+    },
+    "lockers": {
+      "title": "Armários e Responsabilidade",
+      "content": "Cada hóspede possui um armário individual com chave. O albergue não se responsabiliza por objetos deixados fora dos armários. Oferecemos seguro opcional para pertences de valor."
+    },
+    "silence": {
+      "title": "Política de Silêncio",
+      "content": "Respeite o descanso dos outros hóspedes. O horário de silêncio absoluto é das 22:00 às 08:00."
+    }
+  },
+  "AmenitiesPage": {
+    "title": "Comodidades",
+    "ac": {
+      "title": "Ar-Condicionado",
+      "description": "Todos os nossos quartos são equipados com ar-condicionado para o seu conforto."
+    },
+    "breakfast": {
+      "title": "Café da Manhã",
+      "description": "Incluso na diária, servido no refeitório terceirizado anexo."
+    },
+    "kitchen": {
+      "title": "Cozinha Comunitária",
+      "description": "Totalmente equipada para você preparar suas próprias refeições."
+    },
+    "lavanderia": {
+      "title": "Lavanderia",
+      "description": "Máquinas de lavar e secar disponíveis para uso dos hóspedes."
+    },
+    "linen": {
+      "title": "Kit de Cama",
+      "description": "Roupas de cama limpas inclusas. Renovação gratuita a cada 7 dias de estadia."
+    },
+    "towels": {
+      "title": "Toalhas",
+      "description": "Toalhas de banho disponíveis para todos os hóspedes."
+    },
+    "lockers": {
+      "title": "Armários Individuais",
+      "description": "Armários com chave para guardar seus pertences com segurança."
+    },
+    "reception": {
+      "title": "Portaria 24h",
+      "description": "Nossa equipe está disponível 24 horas por dia para sua segurança e suporte."
+    },
+    "parking": {
+      "title": "Estacionamento",
+      "description": "Vagas rotativas limitadas sujeitas a disponibilidade (sem garantia de vaga)."
+    }
+  },
+  "FeedbackPage": {
+    "title": "Avaliações dos Hóspedes",
+    "leaveReview": "Deixe sua Avaliação",
+    "form": {
+      "rating": "Nota",
+      "comment": "Comentário",
+      "submit": "Enviar Avaliação",
+      "loginRequired": "Você precisa estar logado e ter uma estadia concluída para avaliar.",
+      "success": "Sua avaliação foi enviada e está aguardando moderação."
+    },
+    "noReviews": "Ainda não há avaliações aprovadas."
+  },
+  "ContactPage": {
+    "title": "Contato e Grupos",
+    "description": "Dúvidas ou reservas para grupos grandes? Entre em contato conosco.",
+    "negotiation": {
+      "title": "Negociação para Grupos",
+      "content": "Oferecemos condições especiais para reservas de quartos inteiros ou do albergue completo. Entre em contato para um orçamento personalizado."
+    },
+    "form": {
+      "name": "Nome",
+      "email": "E-mail",
+      "subject": "Assunto",
+      "message": "Mensagem",
+      "send": "Enviar Mensagem",
+      "success": "Mensagem enviada com sucesso! Entraremos em contato em breve."
+    },
+    "info": {
+      "title": "Informações de Contato",
+      "address": "Rua Paschoal Carlos Magno, Santa Teresa, Rio de Janeiro - RJ",
+      "phone": "+55 21 99999-9999",
+      "email": "contato@sralmeida.com.br"
     }
   },
   "Enums": {
+    "QuartoGenero": {
+      "MASCULINO": "Masculino",
+      "FEMININO": "Feminino",
+      "MISTO": "Misto"
+    },
     "LeitoPosicao": {
       "BELICHE_SUPERIOR": "Beliche Superior",
       "BELICHE_INFERIOR": "Beliche Inferior",
@@ -279,6 +416,12 @@
       "SOL_MANHA": "Sol da Manhã",
       "SOL_TARDE": "Sol da Tarde",
       "SEM_SOL": "Sem Sol"
+    },
+    "ReservaStatus": {
+      "CONFIRMADA": "Confirmada",
+      "CHECKIN": "Check-in",
+      "CHECKOUT": "Checkout",
+      "CANCELADA": "Cancelada"
     }
   }
 }

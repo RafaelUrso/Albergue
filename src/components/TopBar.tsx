@@ -95,11 +95,19 @@ export default function TopBar() {
                 <Link href={`/${currentLocale}/account/reservations`} className="text-[10px] uppercase font-black hover:underline text-white/80">
                   {t('myReservations')}
                 </Link>
+                <Link href={`/${currentLocale}/account/profile`} className="text-[10px] uppercase font-black hover:underline text-white/80">
+                  {t('profile')}
+                </Link>
               </div>
             </div>
 
             {/* Mobile/Small Screens Links */}
             <div className="lg:hidden flex items-center gap-2">
+               <Link href={`/${currentLocale}/account/profile`} title={t('profile')} className="hover:bg-white/10 p-1 rounded">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+               </Link>
                <Link href={`/${currentLocale}/account/reservations`} title={t('myReservations')} className="hover:bg-white/10 p-1 rounded">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />

@@ -5,7 +5,9 @@ import { useState, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import DateRangeSelector from '@/components/DateRangeSelector';
 import GuestSelector from '@/components/GuestSelector';
+import ActiveGuestCounter from '@/components/ActiveGuestCounter';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
@@ -87,10 +89,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Content Placeholder */}
+      {/* Active Guest Counter */}
+      <section className="bg-gray-50 py-4 border-b">
+        <div className="container mx-auto px-4 flex items-center justify-center gap-2 text-azul-principal font-bold">
+          <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+          <ActiveGuestCounter />
+        </div>
+      </section>
+
+      {/* Content Section */}
       <section className="py-20 px-4 max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="p-8 border border-gray-100 rounded-2xl bg-white shadow-sm hover:shadow-md transition">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="p-8 border border-gray-100 rounded-2xl bg-white shadow-sm hover:shadow-md transition flex flex-col">
             <div className="w-12 h-12 bg-blue-100 text-azul-principal rounded-full flex items-center justify-center mb-6">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -98,26 +108,76 @@ export default function HomePage() {
               </svg>
             </div>
             <h3 className="text-xl font-bold mb-4">Localização Privilegiada</h3>
-            <p className="text-gray-600">No coração de Santa Teresa, perto dos melhores bares e pontos culturais do Rio.</p>
+            <p className="text-gray-600 flex-grow">No coração de Santa Teresa, perto dos melhores bares e pontos culturais do Rio.</p>
+            <Link href={`/${locale}/map`} className="mt-6 text-azul-principal font-bold hover:underline flex items-center gap-2">
+               Ver Mapa do Albergue
+               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
+            </Link>
           </div>
-          <div className="p-8 border border-gray-100 rounded-2xl bg-white shadow-sm hover:shadow-md transition">
+          <div className="p-8 border border-gray-100 rounded-2xl bg-white shadow-sm hover:shadow-md transition flex flex-col">
             <div className="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mb-6">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
             </div>
             <h3 className="text-xl font-bold mb-4">Comunidade Vibrante</h3>
-            <p className="text-gray-600">Conheça pessoas do mundo todo em nossas áreas comuns e eventos sociais.</p>
+            <p className="text-gray-600 flex-grow">Conheça pessoas do mundo todo em nossas áreas comuns e eventos sociais.</p>
+            <Link href={`/${locale}/feedback`} className="mt-6 text-azul-principal font-bold hover:underline flex items-center gap-2">
+               Ver Avaliações
+               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
+            </Link>
           </div>
-          <div className="p-8 border border-gray-100 rounded-2xl bg-white shadow-sm hover:shadow-md transition">
+          <div className="p-8 border border-gray-100 rounded-2xl bg-white shadow-sm hover:shadow-md transition flex flex-col">
             <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
             <h3 className="text-xl font-bold mb-4">Segurança 24h</h3>
-            <p className="text-gray-600">Sua tranquilidade é nossa prioridade, com recepção e monitoramento constantes.</p>
+            <p className="text-gray-600 flex-grow">Sua tranquilidade é nossa prioridade, com recepção e monitoramento constantes.</p>
+            <Link href={`/${locale}/amenities`} className="mt-6 text-azul-principal font-bold hover:underline flex items-center gap-2">
+               Ver Comodidades
+               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
+            </Link>
           </div>
+        </div>
+
+        {/* Categories / Rooms Quick Links */}
+        <div className="bg-azul-principal rounded-3xl p-8 md:p-12 text-white overflow-hidden relative">
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-black mb-6 uppercase tracking-tight">Nossos Quartos</h2>
+              <p className="text-lg text-white/80 mb-8 leading-relaxed">
+                Oferecemos três tipos de acomodações para atender sua necessidade, desde quartos privativos a dormitórios compartilhados.
+              </p>
+              <div className="flex flex-wrap gap-4 mb-8">
+                 <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-bold">4 Leitos (Privativo)</span>
+                 <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-bold">8 Leitos (Comum)</span>
+                 <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-bold">12 Leitos (Privativo)</span>
+              </div>
+              <Link href={`/${locale}/rooms`} className="inline-block bg-white text-azul-principal font-black px-8 py-4 rounded-xl hover:bg-opacity-90 transition shadow-xl uppercase tracking-widest text-sm">
+                Explorar Todos os Leitos
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+               <div className="h-40 bg-white/10 rounded-2xl"></div>
+               <div className="h-40 bg-white/10 rounded-2xl translate-y-8"></div>
+               <div className="h-40 bg-white/10 rounded-2xl -translate-y-4"></div>
+               <div className="h-40 bg-white/10 rounded-2xl translate-y-4"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer info link */}
+        <div className="mt-20 text-center space-y-4">
+           <h3 className="text-2xl font-bold text-gray-800 tracking-tight">Pronto para sua estadia?</h3>
+           <p className="text-gray-500 max-w-lg mx-auto">
+              Antes de reservar, certifique-se de ler nossas regras e políticas de cancelamento para uma convivência harmoniosa.
+           </p>
+           <div className="flex justify-center gap-6 pt-4">
+              <Link href={`/${locale}/rules`} className="text-azul-principal font-bold hover:underline">Regras do Albergue</Link>
+              <Link href={`/${locale}/contact`} className="text-azul-principal font-bold hover:underline">Contato / Grupos</Link>
+           </div>
         </div>
       </section>
     </main>
