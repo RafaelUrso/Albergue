@@ -2,7 +2,40 @@
   "HomePage": {
     "title": "Bem-vindo ao Albergue do Sr. Almeida",
     "description": "Seu porto seguro em Santa Teresa, Rio de Janeiro.",
-    "search": "Buscar"
+    "search": "Buscar",
+    "features": {
+      "location": {
+        "title": "Localização Privilegiada",
+        "description": "No coração de Santa Teresa, perto dos melhores bares e pontos culturais do Rio.",
+        "link": "Ver Mapa do Albergue"
+      },
+      "community": {
+        "title": "Comunidade Vibrante",
+        "description": "Conheça pessoas do mundo todo em nossas áreas comuns e eventos sociais.",
+        "link": "Ver Avaliações"
+      },
+      "security": {
+        "title": "Segurança 24h",
+        "description": "Sua tranquilidade é nossa prioridade, com recepção e monitoramento constantes.",
+        "link": "Ver Comodidades"
+      }
+    },
+    "rooms": {
+      "title": "Nossos Quartos",
+      "description": "Oferecemos três tipos de acomodações para atender sua necessidade, desde quartos privativos a dormitórios compartilhados.",
+      "types": {
+        "4beds": "4 Leitos (Privativo)",
+        "8beds": "8 Leitos (Comum)",
+        "12beds": "12 Leitos (Privativo)"
+      },
+      "link": "Explorar Todos os Leitos"
+    },
+    "footer": {
+      "title": "Pronto para sua estadia?",
+      "description": "Antes de reservar, certifique-se de ler nossas regras e políticas de cancelamento para uma convivência harmoniosa.",
+      "rules": "Regras do Albergue",
+      "contact": "Contato / Grupos"
+    }
   },
   "TopBar": {
     "hostelName": "Sr. Almeida",
@@ -16,9 +49,24 @@
     "settings": "Configurações",
     "myReservations": "Minhas Reservas",
     "adminPanel": "Painel Admin",
+    "reception": "Recepção",
     "language": "Idioma",
     "login": "Entrar",
     "logout": "Sair"
+  },
+  "Footer": {
+    "description": "Seu porto seguro em Santa Teresa, Rio de Janeiro. Conforto, comunidade e cultura em um só lugar.",
+    "navigation": "Navegação",
+    "rooms": "Quartos e Leitos",
+    "map": "Mapa do Albergue",
+    "amenities": "Comodidades",
+    "reviews": "Avaliações",
+    "info": "Informações",
+    "rules": "Regras do Albergue",
+    "contact": "Contato / Grupos",
+    "register": "Cadastre-se",
+    "followUs": "Siga-nos",
+    "copyright": "© 2026 Albergue Sr. Almeida. Todos os direitos reservados. Desenvolvido por XPTOTec."
   },
   "Selectors": {
     "guests": {
@@ -227,6 +275,7 @@
     "title": "Painel da Recepção",
     "todayCheckins": "Check-ins previstos para hoje",
     "todayCheckouts": "Check-outs previstos para hoje",
+    "activeGuests": "Hóspedes Ativos Agora",
     "alerts": "Alertas e Notificações",
     "specialNeeds": "Necessidades Especiais (PCD/Menores)",
     "registerGuest": "Cadastro Presencial",
@@ -365,10 +414,13 @@
   "FeedbackPage": {
     "title": "Avaliações dos Hóspedes",
     "leaveReview": "Deixe sua Avaliação",
+    "loading": "Carregando...",
     "form": {
       "rating": "Nota",
       "comment": "Comentário",
       "submit": "Enviar Avaliação",
+      "login": "Fazer Login",
+      "hint": "Vá em \"Minhas Reservas\" para avaliar estadias concluídas.",
       "loginRequired": "Você precisa estar logado e ter uma estadia concluída para avaliar.",
       "success": "Sua avaliação foi enviada e está aguardando moderação."
     },

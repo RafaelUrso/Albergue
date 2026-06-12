@@ -40,11 +40,14 @@ export async function submitFeedback(data: {
 
   revalidatePath('/feedback');
   revalidatePath('/account/reservations');
-  return feedback;
+  return {
+    ...feedback,
+    nota: Number(feedback.nota)
+  };
 }
 
 export async function getApprovedFeedbacks() {
-  return prisma.feedback.findMany({
+  const feedbacks = await prisma.feedback.findMany({
     where: {
       status: FeedbackStatus.APROVADO,
     },
@@ -59,4 +62,9 @@ export async function getApprovedFeedbacks() {
       createdAt: 'desc',
     },
   });
+
+  return feedbacks.map(fb => ({
+    ...fb,
+    nota: Number(fb.nota)
+  }));
 }

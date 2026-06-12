@@ -2,7 +2,40 @@
   "HomePage": {
     "title": "Welcome to Sr. Almeida Hostel",
     "description": "Your safe harbor in Santa Teresa, Rio de Janeiro.",
-    "search": "Search"
+    "search": "Search",
+    "features": {
+      "location": {
+        "title": "Privileged Location",
+        "description": "In the heart of Santa Teresa, close to Rio's best bars and cultural spots.",
+        "link": "See Hostel Map"
+      },
+      "community": {
+        "title": "Vibrant Community",
+        "description": "Meet people from all over the world in our common areas and social events.",
+        "link": "See Reviews"
+      },
+      "security": {
+        "title": "24h Security",
+        "description": "Your peace of mind is our priority, with constant reception and monitoring.",
+        "link": "See Amenities"
+      }
+    },
+    "rooms": {
+      "title": "Our Rooms",
+      "description": "We offer three types of accommodations to meet your needs, from private rooms to shared dormitories.",
+      "types": {
+        "4beds": "4 Beds (Private)",
+        "8beds": "8 Beds (Shared)",
+        "12beds": "12 Beds (Private)"
+      },
+      "link": "Explore All Beds"
+    },
+    "footer": {
+      "title": "Ready for your stay?",
+      "description": "Before booking, make sure to read our rules and cancellation policies for a harmonious stay.",
+      "rules": "Hostel Rules",
+      "contact": "Contact / Groups"
+    }
   },
   "TopBar": {
     "hostelName": "Sr. Almeida",
@@ -16,9 +49,24 @@
     "settings": "Settings",
     "myReservations": "My Reservations",
     "adminPanel": "Admin Panel",
+    "reception": "Reception",
     "language": "Language",
     "login": "Login",
     "logout": "Logout"
+  },
+  "Footer": {
+    "description": "Your safe harbor in Santa Teresa, Rio de Janeiro. Comfort, community and culture in one place.",
+    "navigation": "Navigation",
+    "rooms": "Rooms and Beds",
+    "map": "Hostel Map",
+    "amenities": "Amenities",
+    "reviews": "Reviews",
+    "info": "Information",
+    "rules": "Hostel Rules",
+    "contact": "Contact / Groups",
+    "register": "Register",
+    "followUs": "Follow Us",
+    "copyright": "© 2026 Sr. Almeida Hostel. All rights reserved. Developed by XPTOTec."
   },
   "Selectors": {
     "guests": {
@@ -227,6 +275,7 @@
     "title": "Reception Panel",
     "todayCheckins": "Expected Check-ins today",
     "todayCheckouts": "Expected Check-outs today",
+    "activeGuests": "Active Guests Now",
     "alerts": "Alerts and Notifications",
     "specialNeeds": "Special Needs (PWD/Minors)",
     "registerGuest": "In-person Registration",
@@ -365,10 +414,13 @@
   "FeedbackPage": {
     "title": "Guest Reviews",
     "leaveReview": "Leave your Review",
+    "loading": "Loading...",
     "form": {
       "rating": "Rating",
       "comment": "Comment",
       "submit": "Submit Review",
+      "login": "Login",
+      "hint": "Go to \"My Reservations\" to review completed stays.",
       "loginRequired": "You must be logged in and have a completed stay to review.",
       "success": "Your review has been submitted and is awaiting moderation."
     },
