@@ -43,7 +43,11 @@ export async function updateConfiguracao(chave: string, valor: string) {
   });
 
   revalidatePath("/admin/settings");
-  return config;
+  return {
+    id: config.id,
+    chave: config.chave,
+    valor: config.valor
+  };
 }
 
 export async function calculateRefund(reservaId: string) {

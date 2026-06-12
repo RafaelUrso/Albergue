@@ -1,9 +1,11 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslations } from 'next-intl';
 import { getActiveGuestCount } from '@/lib/actions/monitoring';
 
 export default function ActiveGuestCounter() {
+  const t = useTranslations('Reception');
   const [count, setCount] = useState<number>(0);
 
   const fetchCount = useCallback(async () => {
@@ -29,7 +31,7 @@ export default function ActiveGuestCounter() {
 
   return (
     <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-xl text-white">
-      <p className="text-[10px] uppercase font-bold tracking-wider opacity-70">Hóspedes Ativos Agora</p>
+      <p className="text-[10px] uppercase font-bold tracking-wider opacity-70">{t('activeGuests')}</p>
       <div className="flex items-center gap-3 mt-1">
         <span className="relative flex h-3 w-3">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>

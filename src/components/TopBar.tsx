@@ -89,7 +89,7 @@ export default function TopBar() {
                 )}
                 {isReception && (
                   <Link href={`/${currentLocale}/reception`} className="text-[10px] uppercase font-black hover:underline text-white/80">
-                    Recepção
+                    {t('reception')}
                   </Link>
                 )}
                 <Link href={`/${currentLocale}/account/reservations`} className="text-[10px] uppercase font-black hover:underline text-white/80">

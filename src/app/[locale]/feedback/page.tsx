@@ -39,7 +39,7 @@ export default function FeedbackPage() {
         {/* Approved Feedbacks List */}
         <div className="lg:col-span-2 space-y-6">
           {loading ? (
-            <p className="text-center text-gray-500">Carregando...</p>
+            <p className="text-center text-gray-500">{t("loading")}</p>
           ) : feedbacks.length === 0 ? (
             <p className="text-center text-gray-500">{t("noReviews")}</p>
           ) : (
@@ -71,12 +71,12 @@ export default function FeedbackPage() {
             </p>
             {!session && (
               <Link href={`/${locale}/auth/login`} className="block text-center bg-azul-principal text-white font-bold py-2 rounded hover:bg-opacity-90 transition">
-                Fazer Login
+                {t("form.login")}
               </Link>
             )}
             {session && (
                <p className="text-xs text-gray-500 italic">
-                  Vá em &quot;Minhas Reservas&quot; para avaliar estadias concluídas.
+                  {t("form.hint")}
                </p>
             )}
           </div>

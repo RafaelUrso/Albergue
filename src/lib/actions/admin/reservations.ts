@@ -111,5 +111,9 @@ export async function updateReservationStatus(id: string, status: ReservaStatus)
   revalidatePath('/admin/reservations');
   revalidatePath('/reception');
 
-  return updated;
+  return {
+    ...updated,
+    valorTotal: Number(updated.valorTotal),
+    valorPago: Number(updated.valorPago)
+  };
 }

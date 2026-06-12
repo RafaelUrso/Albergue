@@ -11,7 +11,7 @@ export async function getFeedbacks(status?: FeedbackStatus) {
     throw new Error("Unauthorized");
   }
 
-  return prisma.feedback.findMany({
+  const feedbacks = await prisma.feedback.findMany({
     where: status ? { status } : {},
     include: {
       usuario: true,
@@ -20,6 +20,11 @@ export async function getFeedbacks(status?: FeedbackStatus) {
     },
     orderBy: { createdAt: 'desc' }
   });
+
+  return feedbacks.map(fb => ({
+    ...fb,
+    nota: Number(fb.nota)
+  }));
 }
 
 export async function moderateFeedback(id: string, status: FeedbackStatus) {
@@ -37,7 +42,10 @@ export async function moderateFeedback(id: string, status: FeedbackStatus) {
   });
 
   revalidatePath('/admin/feedback');
-  return feedback;
+  return {
+    ...feedback,
+    nota: Number(feedback.nota)
+  };
 }
 
 // Resposta de feedback não está no schema explicitamente como um campo 'resposta',
