@@ -5,7 +5,8 @@ import { bookingSchema, BookingInput } from "@/lib/validations/booking";
 import { auth } from "@/auth";
 import { Prisma, QuartoGenero, LeitoPosicao, LeitoLocalizacao, LeitoIncidenciaSol, PagamentoStatus, PagamentoMetodo } from "@prisma/client";
 import { getTariffForDate } from "./tariff";
-import { parseDateUTC } from "@/lib/date-utils";
+import { parseDateUTC, formatDisplayDate } from "@/lib/date-utils";
+import { sendConfirmationEmail } from "@/lib/mail";
 
 /**
  * RF-011 / RN-011: Motor de reservas com anti-double-booking
@@ -161,6 +162,22 @@ export async function createBooking(input: BookingInput) {
       }
     });
 
+    // Log de auditoria para criação de reserva
+    await tx.auditLog.create({
+      data: {
+        usuarioId: session.user!.id!,
+        acao: "CREATE_RESERVA",
+        entidade: "Reserva",
+        entidadeId: reserva.id,
+        dadosNovos: {
+          checkin,
+          checkout,
+          valorTotal: Number(valorTotal),
+          leitosIds,
+        },
+      },
+    });
+
     for (const leitoId of leitosIds) {
       const acompanhante = acompanhantes.find(a => a.leitoId === leitoId);
       let hospedeOcupanteId = null;
@@ -216,13 +233,16 @@ export async function calculateEstimatedPrice(leitosIds: string[], checkIn: stri
   return valorTotal;
 }
 
-export async function processPayment(reservaId: string, gatewayToken: string) {
+export async function processPayment(reservaId: string, gatewayToken: string, locale: string = 'pt-BR') {
   const session = await auth();
   if (!session?.user?.id) throw new Error("Não autenticado");
 
-  return await prisma.$transaction(async (tx) => {
+  const paymentResult = await prisma.$transaction(async (tx) => {
     const reserva = await tx.reserva.findUnique({
       where: { id: reservaId },
+      include: {
+        usuarioTitular: true,
+      }
     });
 
     if (!reserva) throw new Error("Reserva não encontrada");
@@ -273,9 +293,47 @@ export async function processPayment(reservaId: string, gatewayToken: string) {
       }
     });
 
+    // Log de auditoria para novo pagamento/confirmação de reserva
+    await tx.auditLog.create({
+      data: {
+        usuarioId: session.user!.id!,
+        acao: "PROCESS_PAYMENT",
+        entidade: "Pagamento",
+        entidadeId: pagamento.id,
+        dadosNovos: {
+          reservaId,
+          valor: Number(pagamento.valor),
+          status: pagamento.status,
+          gatewayTransactionId: pagamento.gatewayTransactionId,
+        },
+      },
+    });
+
     return {
-      ...pagamento,
-      valor: Number(pagamento.valor)
+      pagamento: {
+        ...pagamento,
+        valor: Number(pagamento.valor)
+      },
+      reserva
     };
   });
+
+  // Enviar e-mail de confirmação
+  try {
+    await sendConfirmationEmail(
+      paymentResult.reserva.usuarioTitular.email,
+      locale,
+      {
+        id: paymentResult.reserva.id,
+        userName: paymentResult.reserva.usuarioTitular.nomeCompleto,
+        checkIn: formatDisplayDate(paymentResult.reserva.dataCheckin.toISOString(), locale),
+        checkOut: formatDisplayDate(paymentResult.reserva.dataCheckout.toISOString(), locale),
+        total: Number(paymentResult.reserva.valorTotal)
+      }
+    );
+  } catch (error) {
+    console.error("Erro ao enviar e-mail de confirmação:", error);
+  }
+
+  return paymentResult.pagamento;
 }

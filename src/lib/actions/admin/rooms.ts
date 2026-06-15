@@ -2,8 +2,9 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
-import { QuartoTipo, QuartoGenero, LeitoPosicao, LeitoLocalizacao, LeitoIncidenciaSol, LeitoStatus } from "@prisma/client";
+import { QuartoTipo, QuartoGenero, LeitoPosicao, LeitoLocalizacao, LeitoIncidenciaSol, LeitoStatus, Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { roomSchema, bedSchema } from "@/lib/validations/admin";
 
 // Rooms
 export async function getRooms() {
@@ -22,37 +23,63 @@ export async function getRooms() {
   });
 }
 
-export async function createRoom(data: {
-  nome: string;
-  tipo: QuartoTipo;
-  banheiroPrivativo: boolean;
-  genero: QuartoGenero;
-}) {
+export async function createRoom(input: unknown) {
   const session = await auth();
   if (!session || (session.user as { perfil?: string }).perfil !== 'ADMIN_GERAL') {
     throw new Error("Unauthorized");
   }
 
-  const room = await prisma.quarto.create({ data });
+  const data = roomSchema.parse(input);
+
+  const room = await prisma.$transaction(async (tx) => {
+    const newRoom = await tx.quarto.create({ data });
+
+    // Audit Log
+    await tx.auditLog.create({
+      data: {
+        usuarioId: session.user!.id!,
+        acao: "CREATE_ROOM",
+        entidade: "Quarto",
+        entidadeId: newRoom.id,
+        dadosNovos: data as Prisma.InputJsonValue,
+      }
+    });
+
+    return newRoom;
+  });
+
   revalidatePath('/admin/rooms');
   return room;
 }
 
-export async function updateRoom(id: string, data: {
-  nome?: string;
-  tipo?: QuartoTipo;
-  banheiroPrivativo?: boolean;
-  genero?: QuartoGenero;
-  ativo?: boolean;
-}) {
+export async function updateRoom(id: string, input: unknown) {
   const session = await auth();
   if (!session || (session.user as { perfil?: string }).perfil !== 'ADMIN_GERAL') {
     throw new Error("Unauthorized");
   }
 
-  const room = await prisma.quarto.update({
-    where: { id },
-    data
+  const data = roomSchema.partial().parse(input);
+  const oldRoom = await prisma.quarto.findUnique({ where: { id } });
+
+  const room = await prisma.$transaction(async (tx) => {
+    const updatedRoom = await tx.quarto.update({
+      where: { id },
+      data
+    });
+
+    // Audit Log
+    await tx.auditLog.create({
+      data: {
+        usuarioId: session.user!.id!,
+        acao: "UPDATE_ROOM",
+        entidade: "Quarto",
+        entidadeId: id,
+        dadosAnteriores: oldRoom as Prisma.InputJsonValue,
+        dadosNovos: data as Prisma.InputJsonValue,
+      }
+    });
+
+    return updatedRoom;
   });
   revalidatePath('/admin/rooms');
   return room;
@@ -71,39 +98,63 @@ export async function getBeds(quartoId: string) {
   });
 }
 
-export async function createBed(data: {
-  quartoId: string;
-  codigo: string;
-  posicao: LeitoPosicao;
-  localizacao: LeitoLocalizacao;
-  incidenciaSol: LeitoIncidenciaSol;
-  status: LeitoStatus;
-}) {
+export async function createBed(input: unknown) {
   const session = await auth();
   if (!session || (session.user as { perfil?: string }).perfil !== 'ADMIN_GERAL') {
     throw new Error("Unauthorized");
   }
 
-  const bed = await prisma.leito.create({ data });
+  const data = bedSchema.parse(input);
+
+  const bed = await prisma.$transaction(async (tx) => {
+    const newBed = await tx.leito.create({ data });
+
+    // Audit Log
+    await tx.auditLog.create({
+      data: {
+        usuarioId: session.user!.id!,
+        acao: "CREATE_BED",
+        entidade: "Leito",
+        entidadeId: newBed.id,
+        dadosNovos: data as Prisma.InputJsonValue,
+      }
+    });
+
+    return newBed;
+  });
+
   revalidatePath(`/admin/rooms/${data.quartoId}`);
   return bed;
 }
 
-export async function updateBed(id: string, quartoId: string, data: {
-  codigo?: string;
-  posicao?: LeitoPosicao;
-  localizacao?: LeitoLocalizacao;
-  incidenciaSol?: LeitoIncidenciaSol;
-  status?: LeitoStatus;
-}) {
+export async function updateBed(id: string, quartoId: string, input: unknown) {
   const session = await auth();
   if (!session || (session.user as { perfil?: string }).perfil !== 'ADMIN_GERAL') {
     throw new Error("Unauthorized");
   }
 
-  const bed = await prisma.leito.update({
-    where: { id },
-    data
+  const data = bedSchema.partial().parse(input);
+  const oldBed = await prisma.leito.findUnique({ where: { id } });
+
+  const bed = await prisma.$transaction(async (tx) => {
+    const updatedBed = await tx.leito.update({
+      where: { id },
+      data
+    });
+
+    // Audit Log
+    await tx.auditLog.create({
+      data: {
+        usuarioId: session.user!.id!,
+        acao: "UPDATE_BED",
+        entidade: "Leito",
+        entidadeId: id,
+        dadosAnteriores: oldBed as Prisma.InputJsonValue,
+        dadosNovos: data as Prisma.InputJsonValue,
+      }
+    });
+
+    return updatedBed;
   });
   revalidatePath(`/admin/rooms/${quartoId}`);
   return bed;

@@ -5,6 +5,7 @@ import { RegisterInput } from "@/lib/validations/auth";
 import bcrypt from "bcryptjs";
 import { encrypt } from "@/lib/crypto";
 import { Perfil } from "@prisma/client";
+import { sendPasswordResetEmail } from "@/lib/mail";
 
 export async function registerUser(data: RegisterInput) {
   const {
@@ -85,7 +86,7 @@ export async function registerUser(data: RegisterInput) {
   }
 }
 
-export async function forgotPassword(email: string) {
+export async function forgotPassword(email: string, locale: string = 'pt-BR') {
   try {
     const user = await prisma.usuario.findUnique({
       where: { email },
@@ -98,12 +99,15 @@ export async function forgotPassword(email: string) {
 
     // In a real app, send email. Here we mock it.
     const token = Math.random().toString(36).substring(2, 15);
-    const resetLink = `http://localhost:3000/auth/reset-password?token=${token}&email=${email}`;
+    // Use an environment variable for the base URL in a real app
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const resetLink = `${baseUrl}/${locale}/auth/reset-password?token=${token}&email=${email}`;
 
-    console.log(`[MOCK EMAIL] To: ${email} - Link: ${resetLink}`);
+    await sendPasswordResetEmail(email, locale, resetLink);
 
     return { success: true };
   } catch (error) {
+    console.error("Forgot password error:", error);
     return { error: "Erro ao processar solicitação." };
   }
 }

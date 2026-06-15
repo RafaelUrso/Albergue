@@ -106,7 +106,7 @@ export default function ConfirmPage({ searchParams }: ConfirmPageProps) {
 
       // 2. Processar Pagamento (Mock)
       // Usamos o número do cartão como o "token" para o nosso mock
-      await processPayment(result.id, paymentData.cardNumber);
+      await processPayment(result.id, paymentData.cardNumber, locale as string);
 
       router.push(`/${locale}/booking/success?bookingId=${result.id}`);
     } catch (err: unknown) {

@@ -99,7 +99,9 @@
     "registerButton": "Register",
     "loginButton": "Login",
     "loading": "Loading...",
-    "forgotPassword": "Forgot my password"
+    "forgotPassword": "Forgot my password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
   },
   "Booking": {
     "results": {

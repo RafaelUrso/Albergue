@@ -136,7 +136,8 @@ export default function TopBar() {
 
         <button
           onClick={toggleLanguage}
-          className="bg-white text-azul-principal font-bold px-3 py-1 rounded hover:bg-opacity-90 transition text-sm"
+          className="bg-white text-azul-principal font-bold px-3 py-1 rounded hover:bg-opacity-90 transition text-sm focus:ring-2 focus:ring-white focus:outline-none"
+          aria-label={t('language')}
         >
           {t('language')}
         </button>

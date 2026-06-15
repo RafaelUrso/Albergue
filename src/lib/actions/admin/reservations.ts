@@ -2,8 +2,9 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
-import { ReservaStatus } from "@prisma/client";
+import { ReservaStatus, Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { reservationStatusSchema } from "@/lib/validations/admin";
 
 export async function getFilteredReservations(filters: {
   status?: ReservaStatus;
@@ -103,9 +104,28 @@ export async function updateReservationStatus(id: string, status: ReservaStatus)
     throw new Error("Unauthorized");
   }
 
-  const updated = await prisma.reserva.update({
-    where: { id },
-    data: { status }
+  reservationStatusSchema.parse({ id, status });
+  const oldReserva = await prisma.reserva.findUnique({ where: { id } });
+
+  const updated = await prisma.$transaction(async (tx) => {
+    const res = await tx.reserva.update({
+      where: { id },
+      data: { status }
+    });
+
+    // Audit Log
+    await tx.auditLog.create({
+      data: {
+        usuarioId: session.user!.id!,
+        acao: "UPDATE_RESERVA_STATUS",
+        entidade: "Reserva",
+        entidadeId: id,
+        dadosAnteriores: { status: oldReserva?.status },
+        dadosNovos: { status },
+      }
+    });
+
+    return res;
   });
 
   revalidatePath('/admin/reservations');
