@@ -43,9 +43,9 @@ export default function Footer() {
           <h4 className="font-bold mb-4 uppercase text-xs tracking-widest text-gray-500">{t('followUs')}</h4>
           <div className="flex gap-4">
              {/* Social placeholders */}
-             <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-azul-principal transition cursor-pointer">IG</div>
-             <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-azul-principal transition cursor-pointer">FB</div>
-             <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-azul-principal transition cursor-pointer">TW</div>
+             <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-azul-principal transition cursor-pointer" aria-label="Instagram">IG</div>
+             <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-azul-principal transition cursor-pointer" aria-label="Facebook">FB</div>
+             <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-azul-principal transition cursor-pointer" aria-label="Twitter">TW</div>
           </div>
         </div>
       </div>

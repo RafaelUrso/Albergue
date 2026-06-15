@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { sendCancellationEmail } from "@/lib/mail";
 
 /**
  * RF-022 / RF-023 / RN-016 / RN-017 / RN-028 a RN-031
@@ -125,15 +126,18 @@ export async function calculateRefund(reservaId: string) {
   };
 }
 
-export async function cancelReservation(reservaId: string) {
+export async function cancelReservation(reservaId: string, locale: string = 'pt-BR') {
   const session = await auth();
   if (!session?.user?.id) throw new Error("Não autenticado");
 
   const refundDetails = await calculateRefund(reservaId);
 
-  return await prisma.$transaction(async (tx) => {
+  const cancellationResult = await prisma.$transaction(async (tx) => {
     const reserva = await tx.reserva.findUnique({
-      where: { id: reservaId }
+      where: { id: reservaId },
+      include: {
+        usuarioTitular: true,
+      }
     });
 
     if (!reserva) throw new Error("Reserva não encontrada");
@@ -184,11 +188,31 @@ export async function cancelReservation(reservaId: string) {
     revalidatePath("/admin/dashboard");
 
     return {
-      ...cancelamento,
-      valorEstornado: Number(cancelamento.valorEstornado),
-      taxaRetida: Number(cancelamento.taxaRetida),
+      cancelamento: {
+        ...cancelamento,
+        valorEstornado: Number(cancelamento.valorEstornado),
+        taxaRetida: Number(cancelamento.taxaRetida),
+      },
+      reserva
     };
   });
+
+  // Enviar e-mail de cancelamento
+  try {
+    await sendCancellationEmail(
+      cancellationResult.reserva.usuarioTitular.email,
+      locale,
+      {
+        id: cancellationResult.reserva.id,
+        refund: refundDetails.valorEstornado,
+        fee: refundDetails.taxaRetida
+      }
+    );
+  } catch (error) {
+    console.error("Erro ao enviar e-mail de cancelamento:", error);
+  }
+
+  return cancellationResult.cancelamento;
 }
 
 export async function getUserReservations() {

@@ -103,7 +103,7 @@ export default function ReservationsPage() {
     if (!cancellingId) return;
     setProcessing(true);
     try {
-      await cancelReservation(cancellingId);
+      await cancelReservation(cancellingId, locale as string);
       setCancellingId(null);
       setRefundInfo(null);
       loadReservations();

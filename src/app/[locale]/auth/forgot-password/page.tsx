@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { forgotPassword } from "@/lib/actions/auth";
+import { useParams } from "next/navigation";
 
 export default function ForgotPasswordPage() {
   const t = useTranslations("Auth");
+  const { locale } = useParams();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +19,7 @@ export default function ForgotPasswordPage() {
     setMessage(null);
     setError(null);
 
-    const result = await forgotPassword(email);
+    const result = await forgotPassword(email, locale as string);
     if (result.error) {
       setError(result.error);
     } else {

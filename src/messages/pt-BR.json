@@ -99,7 +99,9 @@
     "registerButton": "Cadastrar",
     "loginButton": "Entrar",
     "loading": "Carregando...",
-    "forgotPassword": "Esqueci minha senha"
+    "forgotPassword": "Esqueci minha senha",
+    "showPassword": "Mostrar senha",
+    "hidePassword": "Ocultar senha"
   },
   "Booking": {
     "results": {

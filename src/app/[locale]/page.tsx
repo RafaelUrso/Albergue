@@ -46,7 +46,7 @@ export default function HomePage() {
         <div className="absolute inset-0 overflow-hidden opacity-30">
           <Image
             src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=2069&auto=format&fit=crop"
-            alt="Hostel"
+            alt="Interior do Albergue Sr. Almeida em Santa Teresa"
             fill
             className="object-cover"
             priority
@@ -62,7 +62,7 @@ export default function HomePage() {
           </p>
 
           {/* Search Box */}
-          <div className="bg-white p-4 md:p-6 rounded-xl shadow-2xl flex flex-col md:flex-row items-stretch gap-4 text-gray-800 mt-12">
+          <div className="bg-white p-4 md:p-6 rounded-xl shadow-2xl flex flex-col lg:flex-row items-stretch gap-4 text-gray-800 mt-12 max-w-full overflow-hidden">
             <div className="flex-grow">
               <DateRangeSelector
                 initialCheckIn={searchParams.checkIn}
@@ -148,7 +148,7 @@ export default function HomePage() {
 
         {/* Categories / Rooms Quick Links */}
         <div className="bg-azul-principal rounded-3xl p-8 md:p-12 text-white overflow-hidden relative">
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-black mb-6 uppercase tracking-tight">{t('rooms.title')}</h2>
               <p className="text-lg text-white/80 mb-8 leading-relaxed">
