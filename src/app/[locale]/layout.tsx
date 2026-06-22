@@ -16,20 +16,16 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body className="antialiased">
-        <SessionProvider>
-          <NextIntlClientProvider messages={messages}>
-            <div className="min-h-screen flex flex-col">
-              <TopBar />
-              <div className="pt-16 flex-grow">
-                {children}
-              </div>
-              <Footer />
-            </div>
-          </NextIntlClientProvider>
-        </SessionProvider>
-      </body>
-    </html>
+    <SessionProvider>
+      <NextIntlClientProvider messages={messages} locale={locale}>
+        <div className="min-h-screen flex flex-col">
+          <TopBar />
+          <div className="pt-16 flex-grow">
+            {children}
+          </div>
+          <Footer />
+        </div>
+      </NextIntlClientProvider>
+    </SessionProvider>
   );
 }
