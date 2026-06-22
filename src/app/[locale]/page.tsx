@@ -87,14 +87,11 @@ export default function HomePage() {
               {t('search')}
             </button>
           </div>
-        </div>
-      </section>
 
-      {/* Active Guest Counter */}
-      <section className="bg-gray-50 py-4 border-b">
-        <div className="container mx-auto px-4 flex items-center justify-center gap-2 text-azul-principal font-bold">
-          <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-          <ActiveGuestCounter />
+          {/* Active Guest Counter (Compact and centered) */}
+          <div className="mt-8 flex justify-center">
+            <ActiveGuestCounter />
+          </div>
         </div>
       </section>
 

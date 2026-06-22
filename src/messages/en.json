@@ -71,7 +71,7 @@
   "Selectors": {
     "guests": {
       "label": "People",
-      "summary": "{adults} Adults, {children} Children",
+      "summary": "{adults, plural, =1 {1 Adult} other {# Adults}}, {children, plural, =0 {0 Children} =1 {1 Child} other {# Children}}",
       "adults": "Adults",
       "children": "Children",
       "childrenAge": "0 to 4 years old",
@@ -118,7 +118,7 @@
       "masculino": "Male",
       "feminino": "Female",
       "misto": "Mixed",
-      "guests": "People",
+      "guests": "{count, plural, =1 {1 Guest} other {# Guests}}",
       "select": "Select",
       "selectedBeds": "{count} of {total} beds selected",
       "selectMore": "Select {count} more to continue",
@@ -226,7 +226,25 @@
       "revenue": "Revenue",
       "day": "Day",
       "week": "Week",
-      "month": "Month"
+      "month": "Month",
+      "reservations": {
+        "title": "Reservation Management",
+        "description": "View, filter and change status of confirmed reservations."
+      },
+      "rooms": {
+        "title": "Room and Bed Management",
+        "description": "CRUD of rooms and individual configuration of beds."
+      },
+      "tariffs": {
+        "description": "Manage daily rates and seasonal periods."
+      },
+      "feedback": {
+        "title": "Feedback Moderation",
+        "description": "Approve or reject comments left by guests."
+      },
+      "settings": {
+        "description": "Global system settings and policies."
+      }
     },
     "reservations": {
       "title": "Reservation Management",
@@ -476,6 +494,11 @@
       "CHECKIN": "Check-in",
       "CHECKOUT": "Checkout",
       "CANCELADA": "Cancelled"
+    },
+    "QuartoTipo": {
+      "TIPO_4_LEITOS": "4-Bed Room",
+      "TIPO_8_LEITOS": "8-Bed Room",
+      "TIPO_12_LEITOS": "12-Bed Room"
     }
   }
 }

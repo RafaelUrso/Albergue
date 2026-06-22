@@ -71,7 +71,7 @@
   "Selectors": {
     "guests": {
       "label": "Pessoas",
-      "summary": "{adults} Adultos, {children} Crianças",
+      "summary": "{adults, plural, =1 {1 Adulto} other {# Adultos}}, {children, plural, =0 {0 Crianças} =1 {1 Criança} other {# Crianças}}",
       "adults": "Adultos",
       "children": "Crianças",
       "childrenAge": "0 a 4 anos",
@@ -118,7 +118,7 @@
       "masculino": "Masculino",
       "feminino": "Feminino",
       "misto": "Misto",
-      "guests": "Pessoas",
+      "guests": "{count, plural, =1 {1 Hóspede} other {# Hóspedes}}",
       "select": "Selecionar",
       "selectedBeds": "{count} de {total} leitos selecionados",
       "selectMore": "Selecione mais {count} para continuar",
@@ -226,7 +226,25 @@
       "revenue": "Receita",
       "day": "Dia",
       "week": "Semana",
-      "month": "Mês"
+      "month": "Mês",
+      "reservations": {
+        "title": "Gestão de Reservas",
+        "description": "Visualize, filtre e altere status de reservas confirmadas."
+      },
+      "rooms": {
+        "title": "Gestão de Quartos e Leitos",
+        "description": "CRUD de quartos e configuração individual de leitos."
+      },
+      "tariffs": {
+        "description": "Gerencie valores de diárias e períodos sazonais."
+      },
+      "feedback": {
+        "title": "Moderação de Feedback",
+        "description": "Aprove ou rejeite comentários deixados pelos hóspedes."
+      },
+      "settings": {
+        "description": "Configurações globais do sistema e políticas."
+      }
     },
     "reservations": {
       "title": "Gestão de Reservas",
@@ -476,6 +494,11 @@
       "CHECKIN": "Check-in",
       "CHECKOUT": "Checkout",
       "CANCELADA": "Cancelada"
+    },
+    "QuartoTipo": {
+      "TIPO_4_LEITOS": "Quarto 4 Leitos",
+      "TIPO_8_LEITOS": "Quarto 8 Leitos",
+      "TIPO_12_LEITOS": "Quarto 12 Leitos"
     }
   }
 }

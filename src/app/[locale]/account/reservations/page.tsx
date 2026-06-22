@@ -11,8 +11,8 @@ import { formatDisplayDate } from '@/lib/date-utils';
 interface Reservation {
   id: string;
   status: string;
-  dataCheckin: Date;
-  dataCheckout: Date;
+  dataCheckin: string;
+  dataCheckout: string;
   valorTotal: number;
   valorPago: number;
   leitos: Array<{

@@ -9,9 +9,10 @@ export async function getUserProfile() {
     return null;
   }
 
-  return prisma.usuario.findUnique({
+  const user = await prisma.usuario.findUnique({
     where: { id: session.user.id },
     select: {
+      id: true,
       nomeCompleto: true,
       email: true,
       telefone: true,
@@ -21,4 +22,11 @@ export async function getUserProfile() {
       perfil: true,
     }
   });
+
+  if (!user) return null;
+
+  return {
+    ...user,
+    dataNascimento: user.dataNascimento.toISOString(),
+  };
 }
