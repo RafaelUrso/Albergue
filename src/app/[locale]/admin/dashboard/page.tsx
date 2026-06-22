@@ -16,6 +16,7 @@ export default async function AdminDashboardPage({ params }: { params: Promise<{
   const stats = await getDashboardStats();
   const t = await getTranslations('Admin.dashboard');
   const ta = await getTranslations('Admin');
+  const te = await getTranslations('Enums');
 
   return (
     <div className="pt-24 pb-12 px-4 max-w-6xl mx-auto">
@@ -48,7 +49,7 @@ export default async function AdminDashboardPage({ params }: { params: Promise<{
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         {stats.occupancyByType.map((occ) => (
           <div key={occ.tipo} className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <p className="text-sm font-bold mb-2">{occ.tipo}</p>
+            <p className="text-sm font-bold mb-2">{te(`QuartoTipo.${occ.tipo}`)}</p>
             <div className="w-full bg-gray-100 rounded-full h-4">
               <div
                 className="bg-azul-principal h-4 rounded-full"
@@ -70,8 +71,8 @@ export default async function AdminDashboardPage({ params }: { params: Promise<{
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
           </div>
-          <h2 className="text-xl font-bold mb-2">Gestão de Reservas</h2>
-          <p className="text-gray-500 text-sm">Visualize, filtre e altere status de reservas confirmadas.</p>
+          <h2 className="text-xl font-bold mb-2">{t('reservations.title')}</h2>
+          <p className="text-gray-500 text-sm">{t('reservations.description')}</p>
         </Link>
 
         {perfil === 'ADMIN_GERAL' && (
@@ -84,8 +85,8 @@ export default async function AdminDashboardPage({ params }: { params: Promise<{
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </div>
-            <h2 className="text-xl font-bold mb-2">Gestão de Quartos e Leitos</h2>
-            <p className="text-gray-500 text-sm">CRUD de quartos e configuração individual de leitos.</p>
+            <h2 className="text-xl font-bold mb-2">{t('rooms.title')}</h2>
+            <p className="text-gray-500 text-sm">{t('rooms.description')}</p>
           </Link>
         )}
 
@@ -99,7 +100,7 @@ export default async function AdminDashboardPage({ params }: { params: Promise<{
             </svg>
           </div>
           <h2 className="text-xl font-bold mb-2">{ta('tariffs.title')}</h2>
-          <p className="text-gray-500 text-sm">Gerencie valores de diárias e períodos sazonais.</p>
+          <p className="text-gray-500 text-sm">{t('tariffs.description')}</p>
         </Link>
 
         {perfil === 'ADMIN_GERAL' && (
@@ -112,8 +113,8 @@ export default async function AdminDashboardPage({ params }: { params: Promise<{
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
               </svg>
             </div>
-            <h2 className="text-xl font-bold mb-2">Moderação de Feedback</h2>
-            <p className="text-gray-500 text-sm">Aprove ou rejeite comentários deixados pelos hóspedes.</p>
+            <h2 className="text-xl font-bold mb-2">{t('feedback.title')}</h2>
+            <p className="text-gray-500 text-sm">{t('feedback.description')}</p>
           </Link>
         )}
 
@@ -128,7 +129,7 @@ export default async function AdminDashboardPage({ params }: { params: Promise<{
             </svg>
           </div>
           <h2 className="text-xl font-bold mb-2">{ta('settings.title')}</h2>
-          <p className="text-gray-500 text-sm">Configurações globais do sistema e políticas.</p>
+          <p className="text-gray-500 text-sm">{t('settings.description')}</p>
         </Link>
       </div>
     </div>

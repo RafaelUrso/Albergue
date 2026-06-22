@@ -45,7 +45,7 @@ export default async function ResultsPage({ params, searchParams }: ResultsPageP
         <div>
           <h1 className="text-3xl font-bold">{t('title')}</h1>
           <p className="text-gray-600">
-            {formatDisplayDate(sParams.checkIn, locale)} — {formatDisplayDate(sParams.checkOut, locale)} • {sParams.adults} {t('guests')}
+            {formatDisplayDate(sParams.checkIn, locale)} — {formatDisplayDate(sParams.checkOut, locale)} • {t('guests', { count: parseInt(sParams.adults) })}
           </p>
         </div>
       </div>

@@ -45,26 +45,26 @@ export default function DateRangeSelector({ initialCheckIn, initialCheckOut, onS
   }, [checkIn, today]);
 
   return (
-    <div className="flex flex-col md:flex-row items-center gap-2 bg-white/10 p-1 rounded-lg">
+    <div className="flex flex-col md:flex-row items-center gap-2 bg-gray-50 border border-gray-200 p-1 rounded-lg shadow-sm">
       <div className="flex flex-col">
-        <label className="text-[10px] uppercase font-bold text-white/70 px-2">{t('checkin')}</label>
+        <label className="text-[10px] uppercase font-bold text-gray-500 px-2">{t('checkin')}</label>
         <input
           type="date"
           min={today}
           value={checkIn}
           onChange={handleCheckInChange}
-          className="bg-transparent text-white text-sm outline-none px-2 py-1 appearance-none cursor-pointer"
+          className="bg-transparent text-gray-900 text-sm font-semibold outline-none px-2 py-1 appearance-none cursor-pointer"
         />
       </div>
-      <div className="hidden md:block w-px h-8 bg-white/20" />
+      <div className="hidden md:block w-px h-8 bg-gray-200" />
       <div className="flex flex-col">
-        <label className="text-[10px] uppercase font-bold text-white/70 px-2">{t('checkout')}</label>
+        <label className="text-[10px] uppercase font-bold text-gray-500 px-2">{t('checkout')}</label>
         <input
           type="date"
           min={minCheckOut}
           value={checkOut}
           onChange={handleCheckOutChange}
-          className="bg-transparent text-white text-sm outline-none px-2 py-1 appearance-none cursor-pointer"
+          className="bg-transparent text-gray-900 text-sm font-semibold outline-none px-2 py-1 appearance-none cursor-pointer"
         />
       </div>
     </div>

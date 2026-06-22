@@ -38,10 +38,10 @@ export default function GuestSelector({
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-white/10 hover:bg-white/20 px-4 py-3 rounded-md transition text-sm text-white flex flex-col items-start min-w-[150px]"
+        className="bg-gray-50 border border-gray-200 hover:bg-gray-100 px-4 py-2 rounded-lg transition text-sm text-gray-900 flex flex-col items-start min-w-[150px] shadow-sm"
       >
-        <span className="text-[10px] uppercase font-bold text-white/70">{t('label')}</span>
-        <span>{t('summary', { adults, children })}</span>
+        <span className="text-[10px] uppercase font-bold text-gray-500">{t('label')}</span>
+        <span className="font-semibold">{t('summary', { adults, children })}</span>
       </button>
 
       {isOpen && (

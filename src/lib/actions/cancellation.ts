@@ -239,13 +239,25 @@ export async function getUserReservations() {
 
   return reservas.map(r => ({
     ...r,
+    dataCheckin: r.dataCheckin.toISOString(),
+    dataCheckout: r.dataCheckout.toISOString(),
+    createdAt: r.createdAt.toISOString(),
     valorTotal: Number(r.valorTotal),
     valorPago: Number(r.valorPago),
+    leitos: r.leitos.map(rl => ({
+      ...rl,
+      leito: {
+        ...rl.leito,
+        createdAt: rl.leito.createdAt.toISOString(),
+      }
+    })),
     cancelamento: r.cancelamento ? {
       ...r.cancelamento,
+      solicitadoEm: r.cancelamento.solicitadoEm.toISOString(),
       valorEstornado: Number(r.cancelamento.valorEstornado),
       taxaRetida: Number(r.cancelamento.taxaRetida),
     } : null,
-    hasFeedback: r.feedbacks.length > 0
+    hasFeedback: r.feedbacks.length > 0,
+    feedbacks: undefined, // Avoid sending raw feedback objects
   }));
 }
